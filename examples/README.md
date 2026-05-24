@@ -1,6 +1,6 @@
 # IssueSmith 端到端示例
 
-本文档通过一个具体场景，完整展示如何用 IssueSmith 工作流完成一次 idea → PR → 合并 → 沉淀的闭环。
+本文档通过一个具体场景，完整展示如何用 IssueSmith 工作流完成一次 idea → PR → 合并的闭环。
 
 > 示例为操作流演示（只展示输入步骤和命令），不包含命令的实际输出。
 
@@ -101,10 +101,10 @@ npm install
 直接使用内置指令，AI 自动读取 Issue、拆解任务、按纪律逐项实现：
 
 ```
-/ism:implement 42
+/ism:implement
 ```
 
-AI 会进入实现模式：先定位第一个未勾选的 task → 拆解为小步 → 测试先行 → 逐步实现 → 验证 → 提交 → 更新 Issue checklist。
+AI 会进入实现模式：前置校验 worktree → 定位第一个未勾选的 task → 拆解为小步 → 测试先行 → 逐步实现 → 验证 → 提交 → 更新 Issue checklist。
 
 ### 手动方式：拆解任务并逐项实现
 
@@ -197,7 +197,7 @@ npm test       # 确保所有测试通过
 npm run lint   # 确保代码风格无报错
 ```
 
-## 第 4 步：Review 和 PR
+## 第 4 步：收尾
 
 ### 推荐方式：使用 `/ism:finish`
 
@@ -207,7 +207,7 @@ npm run lint   # 确保代码风格无报错
 /ism:finish
 ```
 
-AI 会自动：运行最终验证 → 逐项核对 AC → 清理检查 → 推送分支 → 自动填充 PR 模板 → 创建 PR → AI code review → 合并。
+AI 会执行：最终验证 → 逐项核对 AC → 清理检查 → 推送 → 创建 PR → 提交后自检（利用 CI 等待期做验证 + code review）→ CI 通过 → 由你选择合并方式。
 
 ### 手动方式：创建 PR
 
@@ -287,11 +287,11 @@ Closes #42
 gh pr merge --squash
 ```
 
-## 第 5 步：合并后沉淀
+## 合并后
 
-合并后，根据变更的性质决定需要更新和清理的内容。
+合并后，根据变更的性质决定需要更新和清理的内容。文档更新和 ADR 决策应在实现阶段完成（`/ism:implement` 已强制执行）。
 
-### 5.1 判断是否需要 ADR
+### 判断是否需要 ADR
 
 参考 `docs/adr-policy.md` 的决策规则：
 
@@ -344,7 +344,7 @@ git branch -d feat/task-search
 cd ../todo-app-search
 
 # === 第 3 步：开发 ===
-/ism:implement 42
+/ism:implement
 cd ../todo-app-search
 
 # 提交变更
@@ -355,10 +355,10 @@ git commit -m "feat: add filterTasks utility with case-insensitive search"
 npm test
 npm run lint
 
-# === 第 4 步：Review 和 PR ===
+# === 第 4 步：收尾 ===
 /ism:finish
 
-# === 第 5 步：清理 ===
+# === 合并后清理 ===
 cd ~/projects/todo-app
 git worktree remove ../todo-app-search
 git branch -d feat/task-search
