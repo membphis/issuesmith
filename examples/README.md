@@ -10,9 +10,7 @@
 
 ## 第 1 步：创建 Issue
 
-以下是用 `.github/ISSUE_TEMPLATE/feature.yml` 模板填写的完整 Issue。你在 GitHub 上通过 "New Issue → Feature / Enhancement" 创建。
-
-> 提示：本项目的模板位于 `.github/ISSUE_TEMPLATE/feature.yml`，可复制到你的 `todo-app` 项目使用。
+使用 `/ism:create` 指令创建 Issue，逐节引导填写。
 
 ---
 

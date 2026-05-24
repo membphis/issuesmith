@@ -74,8 +74,10 @@ IssueSmith 明确区分四层信息，不同信息有不同的存放位置和生
 
 ### 第一步：创建你的第一个 Issue
 
-1. 参考 [Issue 模板](.github/ISSUE_TEMPLATE/feature.yml) 创建一个新 Issue。
-2. 包含至少这几个部分：Background、Goal、Acceptance Criteria、Task Checklist。
+使用内置指令创建 Issue，引导你从想法到完整 Issue：
+
+- `/ism:explore` — 思考伙伴模式。探索问题空间、检查已有 Issues、对比方案，不写代码。
+- `/ism:create` — 从想法生成 Issue。逐节引导（Background → Goal → AC → Tasks），review 后通过 `gh issue create` 发布。
 
 ### 第二步：启动开发
 
