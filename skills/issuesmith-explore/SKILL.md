@@ -1,3 +1,8 @@
+---
+name: issuesmith-explore
+description: Enter explore mode to think through ideas before creating an Issue
+---
+
 # Skill: issuesmith-explore
 
 Enter explore mode. Think deeply. Visualize freely. Follow the conversation wherever it goes.
