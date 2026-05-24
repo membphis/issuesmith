@@ -224,7 +224,7 @@ PR 创建后 CI 通常需要时间运行。**不要在等待时闲置**，利用
 
 #### 8.1 最终质量验证
 
-对当前 worktree 的变更再做一次完整的证据级验证。参见内置 skill `skills/issuesmith-verify/SKILL.md` — 证据先于声称。
+对当前 worktree 的变更再做一次完整的证据级验证。可使用 `/ism:verify` 指令（参见内置 skill `skills/issuesmith-verify/SKILL.md`）— 证据先于声称。
 
 ```bash
 # 证据 1：全量测试
@@ -238,7 +238,7 @@ PR 创建后 CI 通常需要时间运行。**不要在等待时闲置**，利用
 
 #### 8.2 AI 自检 Review
 
-质量验证通过后，对整个 PR 做一次 AI 自检 review。参见内置 skill `skills/issuesmith-code-review/SKILL.md` — 在做外部 review 之前先自己检查一遍。
+质量验证通过后，对整个 PR 做一次 AI 自检 review。可使用 `/ism:code-review` 指令（参见内置 skill `skills/issuesmith-code-review/SKILL.md`）— 在做外部 review 之前先自己检查一遍。
 
 ```
 请 review 当前分支的变更（对比 origin/main），关注：
@@ -447,6 +447,8 @@ PR #N 已合并。是否清理 worktree？
 
 本 skill 是 IssueSmith 流程的第四步，通常在 `/ism:implement` 全部任务完成后自动进入：
 - **`/ism:implement`** — 完成后自动引导到此 skill
+- **`/ism:verify`** — 步骤 8.1 调用的验证 skill，也可独立使用
+- **`/ism:code-review`** — 步骤 8.2 调用的 review skill，也可独立使用
 - **`/ism:start`** — 创建此 worktree 的指令
 - **`/ism:create`** — 创建此 PR 关联的 Issue
 

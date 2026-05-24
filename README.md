@@ -121,6 +121,13 @@ IssueSmith 明确区分四层信息，不同信息有不同的存放位置和生
 
 以上四步覆盖了开发全流程。文档更新和 ADR 决策在实现阶段已处理，本地临时文件由 `/ism:implement` 强制不入库。
 
+### 辅助指令
+
+除了主流程五步，以下指令可在开发过程中随时使用：
+
+- **`/ism:verify`** — 运行项目的测试和 lint 命令，读取输出作为证据。在声称"通过"或"完成"之前使用。
+- **`/ism:code-review`** — 对当前分支的变更做系统化 review（Issue 对齐、代码质量、架构、测试、生产就绪），按严重程度分级输出。
+
 ### 配置 AI 编程工具
 
 将 `templates/AGENTS.md` 复制为 `AGENTS.md`（或 `CLAUDE.md` / `GEMINI.md`），让 AI 工具按 IssueSmith 流程工作。
@@ -131,6 +138,8 @@ IssueSmith 明确区分四层信息，不同信息有不同的存放位置和生
 issuesmith/
 ├── README.md               # 项目入口
 ├── AGENTS.md               # AI 项目规则
+├── commands/               # /ism:*** 指令入口
+├── skills/                 # IssueSmith 内置 skill
 ├── .github/
 │   ├── ISSUE_TEMPLATE/     # Issue 模板
 │   └── pull_request_template.md  # PR 模板

@@ -212,6 +212,10 @@ git branch -d feat/my-feature
 
 # Review 和 PR（使用 /ism:finish 指令）
 
+# 验证和 Code Review（辅助指令）
+# /ism:verify  — 证据级验证
+# /ism:code-review — 系统化 review
+
 # 手动创建 worktree
 git fetch origin
 git worktree add -b feat/<name> ../<repo>-<name> main
