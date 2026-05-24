@@ -199,12 +199,12 @@ npm run lint   # 确保代码风格无报错
 
 ## 第 4 步：Review 和 PR
 
-### 推荐方式：使用 `/ism:review`
+### 推荐方式：使用 `/ism:finish`
 
 `/ism:implement 42` 全部完成后会自动引导进入此步骤。也可以手动执行：
 
 ```
-/ism:review
+/ism:finish
 ```
 
 AI 会自动：运行最终验证 → 逐项核对 AC → 清理检查 → 推送分支 → 自动填充 PR 模板 → 创建 PR → AI code review → 合并。
@@ -356,7 +356,7 @@ npm test
 npm run lint
 
 # === 第 4 步：Review 和 PR ===
-/ism:review
+/ism:finish
 
 # === 第 5 步：清理 ===
 cd ~/projects/todo-app

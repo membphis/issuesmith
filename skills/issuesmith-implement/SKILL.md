@@ -287,10 +287,10 @@ gh issue edit <N> --body "<更新后的正文，对应项改为 - [x]>"
 4. 使用 PR 模板自动填充描述
 5. 做一次 AI code review
 
-确认后开始，或自行执行 /ism:review。
+确认后开始，或自行执行 /ism:finish。
 ```
 
-用户确认后，**自动进入 `/ism:review` 流程**（参见 `skills/issuesmith-review/SKILL.md`）：运行最终验证 → AC 逐项检查 → 清理检查 → 推送 → 创建 PR → AI review → 合并。
+用户确认后，**自动进入 `/ism:finish` 流程**（参见 `skills/issuesmith-finish/SKILL.md`）：运行最终验证 → AC 逐项检查 → 清理检查 → 推送 → 创建 PR → 自检 review → CI 等待 → 合并 → 清理 worktree。
 
 ## 常见自我合理化
 
@@ -396,11 +396,11 @@ gh issue edit <N> --body "<更新后的正文，对应项改为 - [x]>"
 
 本 skill 与 IssueSmith 其他指令配合使用：
 - **`/ism:start`** — 为此实现创建隔离 worktree
-- **`/ism:review`** — 全部任务完成后自动进入，创建 PR 并 review
+- **`/ism:finish`** — 全部任务完成后自动进入，收尾开发分支并创建 PR
 - **`/ism:explore`** — 创建 Issue 前探索问题空间
 - **`/ism:create`** — 创建本 skill 实现的 Issue
 
-全部任务完成后，自动引导进入 `/ism:review`（第四步）。
+全部任务完成后，自动引导进入 `/ism:finish`（第四步）。
 
 ## 底线
 

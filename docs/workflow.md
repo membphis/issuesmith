@@ -113,7 +113,7 @@ pytest
 
 ### 推荐方式：使用内置指令
 
-- **`/ism:review`** — 最终验证 → 逐项检查 AC → 清理检查 → 推送 → 自动填充 PR 模板 → AI review → 合并。`/ism:implement` 全部任务完成后会自动引导进入此步骤。
+- **`/ism:finish`** — 最终验证 → 逐项检查 AC → 清理检查 → 推送 → 自动填充 PR 模板 → CI 等待 → AI review → 合并。`/ism:implement` 全部任务完成后会自动引导进入此步骤。
 
 ### 手动方式：逐项执行
 
@@ -210,7 +210,7 @@ git branch -d feat/my-feature
 
 # 执行开发（使用 /ism:implement 指令）
 
-# Review 和 PR（使用 /ism:review 指令）
+# Review 和 PR（使用 /ism:finish 指令）
 
 # 手动创建 worktree
 git fetch origin

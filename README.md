@@ -109,9 +109,9 @@ IssueSmith 明确区分四层信息，不同信息有不同的存放位置和生
 
 ### 第四步：Review 和 PR
 
-实现完成后使用内置指令自动完成验证、AC 检查、PR 创建和 AI 代码 review。`/ism:implement` 全部任务完成后会自动引导进入此步骤。
+实现完成后使用内置指令收尾开发分支。`/ism:implement` 全部任务完成后会自动引导进入此步骤。
 
-- **`/ism:review`** — 在当前 worktree 内执行 review 和 PR 流程：最终验证 → 逐项检查 AC → 清理检查 → 推送 → 自动填充 PR 模板 → AI review → 合并。
+- **`/ism:finish`** — 在当前 worktree 内收尾开发分支：最终验证 → 逐项检查 AC → 清理检查 → 推送 → 自动填充 PR 模板 → CI 等待 → AI review → 处理第三方 review → 合并 → 清理 worktree。
 
 关键纪律：
 - 证据先于声称 — 每次验证必须运行命令并读取输出

@@ -1,9 +1,9 @@
 ---
-name: issuesmith-review
-description: 实现完成后创建 PR — 运行最终验证、逐项检查 AC、推送分支、自动填充 PR 模板、AI 代码 review，提交前确保一切通过
+name: issuesmith-finish
+description: 实现完成后收尾开发分支 — 最终验证、创建 PR、自检 review、等待 CI、处理第三方 review、合并、清理 worktree
 ---
 
-# IssueSmith Review & PR
+# IssueSmith 收尾 — 完成开发分支
 
 ## 概述
 
@@ -38,7 +38,7 @@ git worktree list
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│                      REVIEW & PR 流程                            │
+│                    FINISH 流程                              │
 ├──────────────────────────────────────────────────────────────────┤
 │                                                                   │
 │  最终验证 → AC 检查 → 清理检查 → 推送 → 创建 PR                  │
