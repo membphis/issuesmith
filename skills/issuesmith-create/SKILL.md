@@ -1,3 +1,8 @@
+---
+name: issuesmith-create
+description: Create a well-structured GitHub Issue from your idea
+---
+
 # Skill: issuesmith-create
 
 Create a well-structured GitHub Issue from an idea or problem description. Guided conversation from idea to published Issue.

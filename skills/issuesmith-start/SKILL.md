@@ -1,3 +1,8 @@
+---
+name: issuesmith-start
+description: Start development by creating an isolated git worktree and branch for an Issue
+---
+
 # Skill: issuesmith-start
 
 通过创建隔离的 git worktree 和分支来启动 Issue 的开发。一条指令完成所有操作：读取 Issue → 推导分支名 → 创建 worktree → 安装依赖。
