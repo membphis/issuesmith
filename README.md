@@ -74,7 +74,7 @@ IssueSmith 明确区分四层信息，不同信息有不同的存放位置和生
 
 ### 第一步：创建你的第一个 Issue
 
-1. 参考 [Issue 模板](.github/ISSUE_TEMPLATE/feature.yml)（TODO: 将在后续任务组创建）创建一个新 Issue。
+1. 参考 [Issue 模板](.github/ISSUE_TEMPLATE/feature.yml) 创建一个新 Issue。
 2. 包含至少这几个部分：Background、Goal、Acceptance Criteria、Task Checklist。
 
 ### 第二步：启动开发
@@ -85,7 +85,7 @@ git fetch origin
 git worktree add -b feat/my-feature ../repo-my-feature main
 ```
 
-详细说明见 `docs/worktree-guide.md`（TODO: 将在后续任务组创建）。
+详细说明见 `docs/worktree-guide.md`。
 
 ### 第三步：执行开发
 
@@ -95,13 +95,13 @@ git worktree add -b feat/my-feature ../repo-my-feature main
 4. 实现后运行验证命令。
 5. 边开发边更新 Issue checklist。
 
-详细流程见 `docs/workflow.md`（TODO: 将在后续任务组创建）。
+详细流程见 `docs/workflow.md`。
 
 ### 第四步：Review 和 PR
 
 1. 自检 Issue 的 Acceptance Criteria 是否全部满足。
 2. 创建 PR，引用 Issue，说明做了什么、为什么、如何验证。
-3. 参考 [PR 模板](.github/pull_request_template.md)（TODO: 将在后续任务组创建）。
+3. 参考 [PR 模板](.github/pull_request_template.md)。
 4. 让 AI 工具做一次 code review。
 
 ### 第五步：合并后沉淀
@@ -109,28 +109,28 @@ git worktree add -b feat/my-feature ../repo-my-feature main
 合并后只提交长期有价值的内容：
 
 - 更新 `docs/` 下当前事实文档。
-- 如果变更涉及重要技术决策，创建 ADR（见 `docs/adr-policy.md`，TODO: 将在后续任务组创建）。
+- 如果变更涉及重要技术决策，创建 ADR（见 `docs/adr-policy.md`）。
 - 不提交临时 plan 或 AI 中间推理。
 
 ### 配置 AI 编程工具
 
-将 `templates/AGENTS.md`（TODO: 将在后续任务组创建）复制为 `AGENTS.md`（或 `CLAUDE.md` / `GEMINI.md`），让 AI 工具按 IssueSmith 流程工作。
+将 `templates/AGENTS.md` 复制为 `AGENTS.md`（或 `CLAUDE.md` / `GEMINI.md`），让 AI 工具按 IssueSmith 流程工作。
 
 ## 项目结构
 
 ```
 issuesmith/
 ├── README.md               # 项目入口
-├── AGENTS.md               # AI 项目规则（TODO）
+├── AGENTS.md               # AI 项目规则
 ├── .github/
-│   ├── ISSUE_TEMPLATE/     # Issue 模板（TODO）
-│   └── pull_request_template.md  # PR 模板（TODO）
+│   ├── ISSUE_TEMPLATE/     # Issue 模板
+│   └── pull_request_template.md  # PR 模板
 ├── templates/
-│   └── AGENTS.md           # 可复制的 AI 项目规则模板（TODO）
+│   └── AGENTS.md           # 可复制的 AI 项目规则模板
 └── docs/
-    ├── workflow.md         # 详细开发流程（TODO）
-    ├── adr-policy.md       # ADR 策略（TODO）
-    └── worktree-guide.md   # Worktree 使用指南（TODO）
+    ├── workflow.md         # 详细开发流程
+    ├── adr-policy.md       # ADR 策略
+    └── worktree-guide.md   # Worktree 使用指南
 ```
 
 ## 许可证

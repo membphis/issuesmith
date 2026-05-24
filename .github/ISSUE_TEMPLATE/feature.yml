@@ -1,0 +1,71 @@
+name: Feature / Enhancement
+description: 创建一个 issue-first 需求（IssueSmith 流程）
+title: "[Feature]: "
+labels: []
+body:
+  - type: textarea
+    id: background
+    attributes:
+      label: Background
+      description: 为什么要做这件事？描述当前的问题、痛点或背景。
+      placeholder: |
+        当前系统/流程中存在的具体问题是什么？
+        为什么现在需要解决它？
+    validations:
+      required: true
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: 要达成什么目标？用一两句话说清楚。
+      placeholder: 描述这个变更完成后，系统/流程会变成什么样。
+    validations:
+      required: true
+
+  - type: textarea
+    id: non-goals
+    attributes:
+      label: Non-goals
+      description: 明确不做什么。帮助划清范围边界，避免 scope creep。
+      placeholder: |
+        - 不包含 XXX 功能
+        - 不涉及 YYY 重构
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: 如何判断这个 Issue 已经完成？列出可验证的条件。
+      placeholder: |
+        - [ ] 用户可以 XXX
+        - [ ] 系统能够 YYY
+        - [ ] 文档 ZZZ 已更新
+    validations:
+      required: true
+
+  - type: textarea
+    id: task-checklist
+    attributes:
+      label: Task Checklist
+      description: 可执行的任务列表。每项应是一个具体、可独立完成的小步骤。
+      placeholder: |
+        - [ ] 1. 创建 XXX 文件
+        - [ ] 2. 实现 YYY 功能
+        - [ ] 3. 编写测试
+        - [ ] 4. 运行验证
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes / Decisions
+      description: 讨论过程中形成的重要取舍、技术决策、参考资料等。
+      placeholder: |
+        - 选择方案 A 而非方案 B 是因为 XXX
+        - 参考文档: https://...
+    validations:
+      required: false
