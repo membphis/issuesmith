@@ -51,17 +51,18 @@ git worktree list
 
 ### 步骤 1：最终验证 — 证据说话
 
-在声称"准备好 PR"之前，运行完整验证：
+在声称"准备好 PR"之前，**自动检测项目的测试和 lint 命令**并运行：
 
-```bash
-# 运行全量测试
-npm test
+**检测逻辑：**
+1. 检查 `package.json` 的 `scripts.test` → `npm test`（或用 `yarn`/`pnpm`）
+2. 检查 `package.json` 的 `scripts.lint` → `npm run lint`
+3. 检查 `Makefile` 中的 `test` 和 `lint` target → `make test && make lint`
+4. 检查 `pyproject.toml` / `setup.cfg` → `pytest` / `ruff check`
+5. 检查 `Cargo.toml` → `cargo test && cargo clippy`
+6. 检查 `go.mod` → `go test ./...`
+7. 检查其他常见模式（`Gemfile`、`mix.exs`、`composer.json` 等）
 
-# 运行 linter
-npm run lint
-```
-
-**MANDATORY:** 必须运行这些命令并读取输出。不准用"应该能过"、"看起来没问题"替代。
+运行检测到的命令。如果项目无可检测的测试命令，明确告知用户并跳过此步。
 
 <Good>
 ```
@@ -171,7 +172,7 @@ Closes #<N>
 
 ## 如何验证
 
-- [x] 运行测试通过（npm test，34/34 pass）
+- [x] 运行测试通过（<自动填写检测到的测试命令及其输出摘要，如: pytest 42 passed>）
 - [x] 手动验证如下场景：
   - 点击主题切换按钮，页面在明暗之间切换
   - 刷新页面，主题偏好保持

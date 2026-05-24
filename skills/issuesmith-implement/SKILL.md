@@ -232,7 +232,8 @@ npm test -- --testPathPattern=filterTasks
 ```
 
 ```bash
-npm test && npm run lint
+# 运行项目的测试和 lint 命令（根据项目自动检测：npm test、pytest、cargo test 等）
+<project-test-command> && <project-lint-command>
 ```
 
 不准说"应该能过"或"看起来对了"。运行命令。读取输出。然后才做声称。
@@ -277,9 +278,7 @@ gh issue edit <N> --body "<更新后的正文，对应项改为 - [x]>"
 全部 8/8 任务完成。
 
 最终验证：
-  npm test && npm run lint
-
-全部通过。所有任务已完成，自动进入第二步 Review 和 PR 阶段。
+  <运行项目测试命令，如: npm test、pytest、cargo test> → 全部通过所有任务已完成，自动进入第二步 Review 和 PR 阶段。
 
 **是否现在创建 PR？我将：**
 1. 逐项核对 Issue #N 的 Acceptance Criteria
