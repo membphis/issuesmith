@@ -224,7 +224,7 @@ PR 创建后 CI 通常需要时间运行。**不要在等待时闲置**，利用
 
 #### 8.1 最终质量验证
 
-对当前 worktree 的变更再做一次完整的证据级验证。这对应 superpowers 的 `verification-before-completion` skill —— 证据先于声称。
+对当前 worktree 的变更再做一次完整的证据级验证。参见内置 skill `skills/issuesmith-verify/SKILL.md` — 证据先于声称。
 
 ```bash
 # 证据 1：全量测试
@@ -238,7 +238,7 @@ PR 创建后 CI 通常需要时间运行。**不要在等待时闲置**，利用
 
 #### 8.2 AI 自检 Review
 
-质量验证通过后，对整个 PR 做一次 AI 自检 review。这对应 superpowers 的 `requesting-code-review` skill —— 在做外部 review 之前先自己检查一遍。
+质量验证通过后，对整个 PR 做一次 AI 自检 review。参见内置 skill `skills/issuesmith-code-review/SKILL.md` — 在做外部 review 之前先自己检查一遍。
 
 ```
 请 review 当前分支的变更（对比 origin/main），关注：
