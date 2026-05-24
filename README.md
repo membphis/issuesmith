@@ -95,12 +95,13 @@ IssueSmith 明确区分四层信息，不同信息有不同的存放位置和生
 
 ### 第三步：执行开发
 
-使用内置指令让 AI 进入 IssueSmith 实现模式，自动遵守开发纪律：读取 Issue → 拆解任务 → 测试先行 → 逐项实现 → 更新 Issue。
+第二步创建好 worktree 后，在 worktree 内使用内置指令让 AI 进入 IssueSmith 实现模式，自动遵守开发纪律：前置校验 → 读取 Issue → 拆解任务 → 测试先行 → 逐项实现 → 更新 Issue。
 
 - **`/ism:implement <N>`** — 读取 Issue #N，按 Task Checklist 逐项实现。自动拆小步、写测试、做实现、跑验证，每完成一项自动同步勾选 Issue。
 - **`/ism:implement`** — 不带参数时，列出 open Issues 供你选择，再进入实现。
 
 关键纪律：
+- **必须在 worktree 内执行**（/ism:implement 会前置校验，不在 worktree 将引导执行 /ism:start）
 - 核心行为先写测试再写实现
 - 小步提交，每步可独立验证
 - 边开发边自动更新 Issue checklist
