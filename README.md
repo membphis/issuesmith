@@ -109,10 +109,15 @@ IssueSmith 明确区分四层信息，不同信息有不同的存放位置和生
 
 ### 第四步：Review 和 PR
 
-1. 自检 Issue 的 Acceptance Criteria 是否全部满足。
-2. 创建 PR，引用 Issue，说明做了什么、为什么、如何验证。
-3. 参考 [PR 模板](.github/pull_request_template.md)。
-4. 让 AI 工具做一次 code review。
+实现完成后使用内置指令自动完成验证、AC 检查、PR 创建和 AI 代码 review。`/ism:implement` 全部任务完成后会自动引导进入此步骤。
+
+- **`/ism:review`** — 在当前 worktree 内执行 review 和 PR 流程：最终验证 → 逐项检查 AC → 清理检查 → 推送 → 自动填充 PR 模板 → AI review → 合并。
+
+关键纪律：
+- 证据先于声称 — 每次验证必须运行命令并读取输出
+- AC 必须逐项核对，有缺口不创建 PR
+- 提交前必须清理调试代码和临时文件
+- 合并前必须经过 review
 
 ### 第五步：合并后沉淀
 

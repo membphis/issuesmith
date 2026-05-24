@@ -111,6 +111,14 @@ pytest
 
 ## 第 5 步：Review 和 PR
 
+### 推荐方式：使用内置指令
+
+- **`/ism:review`** — 最终验证 → 逐项检查 AC → 清理检查 → 推送 → 自动填充 PR 模板 → AI review → 合并。`/ism:implement` 全部任务完成后会自动引导进入此步骤。
+
+### 手动方式：逐项执行
+
+如果需要更细粒度的控制，可以手动按以下步骤执行：
+
 ### 5.1 自检
 
 合并前逐项自检：
@@ -200,7 +208,9 @@ git branch -d feat/my-feature
 
 # 启动开发（使用 /ism:start <N> 指令）
 
-# 执行开发（使用 /ism:implement <N> 指令）
+# 执行开发（使用 /ism:implement 指令）
+
+# Review 和 PR（使用 /ism:review 指令）
 
 # 手动创建 worktree
 git fetch origin

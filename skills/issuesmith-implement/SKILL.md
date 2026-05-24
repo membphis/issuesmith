@@ -270,7 +270,28 @@ gh issue edit <N> --body "<更新后的正文，对应项改为 - [x]>"
 ```
 
 用户说继续 → 回到步骤 2（重读 Issue，找下一个任务）。
-全部完成 → 做最终验证，建议进入 review/PR。
+
+全部完成 → 做最终验证，**自动引导进入第四步**：
+
+```
+全部 8/8 任务完成。
+
+最终验证：
+  npm test && npm run lint
+
+全部通过。所有任务已完成，自动进入第二步 Review 和 PR 阶段。
+
+**是否现在创建 PR？我将：**
+1. 逐项核对 Issue #N 的 Acceptance Criteria
+2. 检查是否有遗留调试代码
+3. 推送分支并创建 Pull Request
+4. 使用 PR 模板自动填充描述
+5. 做一次 AI code review
+
+确认后开始，或自行执行 /ism:review。
+```
+
+用户确认后，**自动进入 `/ism:review` 流程**（参见 `skills/issuesmith-review/SKILL.md`）：运行最终验证 → AC 逐项检查 → 清理检查 → 推送 → 创建 PR → AI review → 合并。
 
 ## 常见自我合理化
 
@@ -376,10 +397,11 @@ gh issue edit <N> --body "<更新后的正文，对应项改为 - [x]>"
 
 本 skill 与 IssueSmith 其他指令配合使用：
 - **`/ism:start`** — 为此实现创建隔离 worktree
+- **`/ism:review`** — 全部任务完成后自动进入，创建 PR 并 review
 - **`/ism:explore`** — 创建 Issue 前探索问题空间
 - **`/ism:create`** — 创建本 skill 实现的 Issue
 
-全部任务完成后，进入 review 和 PR 阶段。
+全部任务完成后，自动引导进入 `/ism:review`（第四步）。
 
 ## 底线
 
