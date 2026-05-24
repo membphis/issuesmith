@@ -48,18 +48,18 @@ git worktree add -b <new-branch> <path> <base-branch>
 
 # 示例：基于 main 创建 feat/my-feature 分支的 worktree
 git fetch origin
-git worktree add -b feat/my-feature ../repo-my-feature main
+git worktree add -b feat/my-feature .ism/my-feature main
 ```
 
 **路径建议**：
-- 将 worktree 放在主仓库的相邻目录：`../<repo>-<feature-name>`
+- 将 worktree 放在项目根目录下的 `.ism/` 目录（该目录已通过 `.gitignore` 排除）：`.ism/<feature-name>`
 - 目录名与分支名对应，方便识别。
 
 ### 切换到已有 Worktree
 
 ```bash
 # 直接 cd 进入 worktree 目录
-cd ../repo-my-feature
+cd .ism/my-feature
 
 # 确保分支是最新的
 git pull origin main
@@ -75,7 +75,7 @@ git worktree remove <path>
 git worktree prune
 
 # 示例
-git worktree remove ../repo-my-feature
+git worktree remove .ism/my-feature
 ```
 
 **注意**：删除前确保变更已推送或不再需要。如果有未合并的变更，`remove` 会提示先合并或推送。
@@ -102,10 +102,10 @@ git checkout main
 git pull origin main
 
 # 2. 创建新 worktree 用于开发
-git worktree add -b feat/add-login ../issuesmith-login main
+git worktree add -b feat/add-login .ism/add-login main
 
 # 3. 进入 worktree，开始开发
-cd ../issuesmith-login
+cd .ism/add-login
 
 # 4. 安装依赖（如果项目需要）
 npm install
@@ -120,7 +120,7 @@ git push origin feat/add-login
 
 # 8. 合并后清理
 cd /path/to/issuesmith
-git worktree remove ../issuesmith-login
+git worktree remove .ism/add-login
 git branch -d feat/add-login
 ```
 
@@ -128,14 +128,14 @@ git branch -d feat/add-login
 
 ```bash
 # Issue #3: 创建模板文件
-git worktree add -b feat/templates ../issuesmith-templates main
+git worktree add -b feat/templates .ism/templates main
 
 # Issue #4: 实现某个功能
-git worktree add -b feat/new-api ../issuesmith-api main
+git worktree add -b feat/new-api .ism/new-api main
 
 # 在两个终端窗口分别工作
-# 终端 1: cd ../issuesmith-templates
-# 终端 2: cd ../issuesmith-api
+# 终端 1: cd .ism/templates
+# 终端 2: cd .ism/new-api
 
 # 互相不干扰，不需要 stash 或切换分支
 ```
@@ -145,15 +145,15 @@ git worktree add -b feat/new-api ../issuesmith-api main
 ```bash
 # 基于 PR 分支创建临时 worktree 用于 review
 git fetch origin pull/5/head:pr-5
-git worktree add ../issuesmith-review-5 pr-5
+git worktree add .ism/review-5 pr-5
 
 # 查看代码、运行测试
-cd ../issuesmith-review-5
+cd .ism/review-5
 npm test
 
 # Review 完成后清理
 cd /path/to/issuesmith
-git worktree remove ../issuesmith-review-5
+git worktree remove .ism/review-5
 git branch -D pr-5
 ```
 
@@ -161,7 +161,7 @@ git branch -D pr-5
 
 ```bash
 # 在你的 worktree 中
-cd ../repo-my-feature
+cd .ism/my-feature
 
 # 拉取最新 main
 git fetch origin
@@ -181,7 +181,7 @@ git rebase origin/main
 Git 不允许同一个分支在多个 worktree 中被 checkout。如果你尝试：
 
 ```bash
-git worktree add ../repo-other main  # 报错：main is already checked out
+git worktree add .ism/other main  # 报错：main is already checked out
 ```
 
 解决方法：创建新分支或使用不同的基础分支。
@@ -218,7 +218,7 @@ git worktree list
 
 ```bash
 # --force 强制删除（会丢失未推送的变更，慎用）
-git worktree remove --force ../repo-my-feature
+git worktree remove --force .ism/my-feature
 ```
 
 ### 在不支持的磁盘或文件系统上使用

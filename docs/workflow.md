@@ -65,13 +65,13 @@ Task Checklist:
 ```bash
 # 假设你的 Issue 是 #3，feature 名为 my-feature
 git fetch origin
-git worktree add -b feat/my-feature ../repo-my-feature main
+git worktree add -b feat/my-feature .ism/my-feature main
 ```
 
 进入新的 worktree 目录开始开发：
 
 ```bash
-cd ../repo-my-feature
+cd .ism/my-feature
 ```
 
 ### 检查前置条件
@@ -194,7 +194,7 @@ gh pr merge --squash
 
 ```bash
 # 删除 worktree
-git worktree remove ../repo-my-feature
+git worktree remove .ism/my-feature
 
 # 如果 feature branch 已完成且已合并到 main
 git branch -d feat/my-feature
@@ -219,13 +219,13 @@ git branch -d feat/my-feature
 
 # 手动创建 worktree
 git fetch origin
-git worktree add -b feat/<name> ../<repo>-<name> main
+git worktree add -b feat/<name> .ism/<name> main
 
 # 列出所有 worktree
 git worktree list
 
 # 进入 worktree
-cd ../<repo>-<name>
+cd .ism/<name>
 
 # 开发完成后推送
 git push origin feat/<name>
@@ -237,7 +237,7 @@ gh pr create --template .github/pull_request_template.md
 gh pr merge --squash
 
 # 清理 worktree
-git worktree remove ../<repo>-<name>
+git worktree remove .ism/<name>
 git branch -d feat/<name>
 ```
 

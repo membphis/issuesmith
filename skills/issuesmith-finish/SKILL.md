@@ -401,8 +401,8 @@ PR #N 已保留为 open 状态，等待人工 Review。Review 通过后可手动
 
 合并后清理 worktree:
   cd <主仓库目录>
-  git worktree remove ../<repo>-<feature>
-  git branch -d <branch>
+   git worktree remove .ism/<feature>
+   git branch -d <branch>
 ```
 
 **选择 3 — 暂不处理：**
@@ -416,8 +416,8 @@ PR #N 已保留为 open 状态，等待人工 Review。Review 通过后可手动
 PR #N 已合并。是否清理 worktree？
 
   cd <主仓库目录>
-  git worktree remove ../<repo>-<feature>
-  git branch -d <branch>
+   git worktree remove .ism/<feature>
+   git branch -d <branch>
 ```
 
 ## 常见自我合理化

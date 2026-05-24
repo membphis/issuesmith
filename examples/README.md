@@ -78,20 +78,20 @@ git checkout main
 git pull origin main
 
 # 基于 main 创建新的 feature worktree
-git worktree add -b feat/task-search ../todo-app-search main
+git worktree add -b feat/task-search .ism/search main
 
 # 进入 worktree 开始开发
-cd ../todo-app-search
+cd .ism/search
 
 # 安装依赖（如果项目需要）
 npm install
 ```
 
-此时你的主仓库 `~/projects/todo-app` 仍在 main 分支上，可以随时处理其他任务。开发工作在 `~/projects/todo-app-search` 中进行。
+此时你的主仓库 `~/projects/todo-app` 仍在 main 分支上，可以随时处理其他任务。开发工作在 `.ism/search` 中进行。
 
 > 如需同时开发另一个 Issue，可以再创建一个 worktree：
 > ```bash
-> git worktree add -b feat/another-feature ../todo-app-another main
+> git worktree add -b feat/another-feature .ism/another main
 > ```
 
 ## 第 3 步：执行开发
@@ -325,7 +325,7 @@ git pull origin main
 cd ~/projects/todo-app
 
 # 删除 worktree
-git worktree remove ../todo-app-search
+git worktree remove .ism/search
 
 # 删除已合并的 feature 分支
 git branch -d feat/task-search
@@ -341,11 +341,11 @@ git branch -d feat/task-search
 
 # === 第 2 步：启动开发 ===
 /ism:start 42
-cd ../todo-app-search
+cd .ism/search
 
 # === 第 3 步：开发 ===
 /ism:implement
-cd ../todo-app-search
+cd .ism/search
 
 # 提交变更
 git add src/utils/filterTasks.ts src/utils/__tests__/filterTasks.test.ts
@@ -360,7 +360,7 @@ npm run lint
 
 # === 合并后清理 ===
 cd ~/projects/todo-app
-git worktree remove ../todo-app-search
+git worktree remove .ism/search
 git branch -d feat/task-search
 ```
 

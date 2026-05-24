@@ -56,12 +56,12 @@ gh issue view <N> --json title,body,labels
 
 示例：`[Feature]: 添加暗色模式开关` → `add-dark-mode-toggle`（如果是英文标题）
 
-### 确定仓库名和 worktree 路径
+### 确定 worktree 路径
 
-从 `git remote get-url origin` 提取仓库名（路径的最后一段，去掉 `.git`）。
+Worktree 统一放在项目根目录下的 `.ism/` 目录中（该目录已通过 `.gitignore` 排除）。
 
 分支名：`<prefix><short-name>`（如 `feat/add-dark-mode-toggle`）
-Worktree 路径：`../<repo>-<short-name>`（如 `../issuesmith-add-dark-mode-toggle`）
+Worktree 路径：`.ism/<short-name>`（如 `.ism/add-dark-mode-toggle`）
 
 ## 步骤 4：与用户确认
 
@@ -72,8 +72,8 @@ Worktree 路径：`../<repo>-<short-name>`（如 `../issuesmith-add-dark-mode-to
 
   Issue:        #<N> — <title>
   分支:         <prefix><short-name>
-  Worktree:     ../<repo>-<short-name>
-  基准分支:     main
+   Worktree:     .ism/<short-name>
+   基准分支:     main
 
 是否继续？你可以修改分支名或路径。
 ```
@@ -89,7 +89,7 @@ Worktree 路径：`../<repo>-<short-name>`（如 `../issuesmith-add-dark-mode-to
 git fetch origin
 
 # 基于 main 创建新分支的 worktree
-git worktree add -b <branch> ../<repo>-<short-name> main
+git worktree add -b <branch> .ism/<short-name> main
 ```
 
 如果 `git worktree add` 失败（如分支或路径已存在），清晰报告错误并建议：
@@ -119,11 +119,11 @@ Worktree 创建成功。
 
   Issue:        #<N> — <title>
   分支:         <branch>
-  Worktree:     ../<repo>-<short-name>
-  依赖:         <已安装 | 未检测到>
+   Worktree:     .ism/<short-name>
+   依赖:         <已安装 | 未检测到>
 
 下一步：
-  cd ../<repo>-<short-name>
+  cd .ism/<short-name>
   # 开始实现 Issue
 ```
 

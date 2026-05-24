@@ -2,3 +2,6 @@
 # AI tools
 .opencode
 openspec/
+
+# IssueSmith worktree
+.ism/
