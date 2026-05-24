@@ -13,7 +13,7 @@
 如果没有提供编号，列出最近的 open Issues 供用户选择：
 
 ```bash
-gh issue list --state open --json number,title,labels --limit 20 --repo <owner>/<repo>
+gh issue list --state open --json number,title,labels --limit 20
 ```
 
 清晰地展示列表，让用户按编号选择。
@@ -23,7 +23,7 @@ gh issue list --state open --json number,title,labels --limit 20 --repo <owner>/
 获取完整的 Issue 内容：
 
 ```bash
-gh issue view <N> --json title,body,labels --repo <owner>/<repo>
+gh issue view <N> --json title,body,labels
 ```
 
 提取：

@@ -96,9 +96,19 @@ npm install
 
 ## 第 3 步：执行开发
 
-### 3.1 读取 Issue 并拆解任务
+### 推荐方式：使用 `/ism:implement`
 
-让 AI 编程工具读取 Issue #42，并拆解为更细的执行步骤（本地 scratch，不入库）：
+直接使用内置指令，AI 自动读取 Issue、拆解任务、按纪律逐项实现：
+
+```
+/ism:implement 42
+```
+
+AI 会进入实现模式：先定位第一个未勾选的 task → 拆解为小步 → 测试先行 → 逐步实现 → 验证 → 提交 → 更新 Issue checklist。
+
+### 手动方式：拆解任务并逐项实现
+
+如果需要更细粒度的控制，可以手动让 AI 读取 Issue 并拆解：
 
 ```
 请阅读 Issue #42，按 Task Checklist 逐项实现。
@@ -324,8 +334,8 @@ git branch -d feat/task-search
 cd ../todo-app-search
 
 # === 第 3 步：开发 ===
-# （在 AI 工具辅助下实现功能）
-# ... 编写代码和测试 ...
+/ism:implement 42
+cd ../todo-app-search
 
 # 提交变更
 git add src/utils/filterTasks.ts src/utils/__tests__/filterTasks.test.ts

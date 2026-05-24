@@ -95,11 +95,15 @@ IssueSmith 明确区分四层信息，不同信息有不同的存放位置和生
 
 ### 第三步：执行开发
 
-1. 让 AI 编程工具读取 Issue 内容。
-2. 按 Task Checklist 逐项实现。
-3. 核心行为优先写测试。
-4. 实现后运行验证命令。
-5. 边开发边更新 Issue checklist。
+使用内置指令让 AI 进入 IssueSmith 实现模式，自动遵守开发纪律：读取 Issue → 拆解任务 → 测试先行 → 逐项实现 → 更新 Issue。
+
+- **`/ism:implement <N>`** — 读取 Issue #N，按 Task Checklist 逐项实现。自动拆小步、写测试、做实现、跑验证，每完成一项自动同步勾选 Issue。
+- **`/ism:implement`** — 不带参数时，列出 open Issues 供你选择，再进入实现。
+
+关键纪律：
+- 核心行为先写测试再写实现
+- 小步提交，每步可独立验证
+- 边开发边自动更新 Issue checklist
 
 详细流程见 `docs/workflow.md`。
 

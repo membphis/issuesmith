@@ -82,31 +82,19 @@ cd ../repo-my-feature
 
 ## 第 4 步：执行开发
 
-### 4.1 读取 Issue
+### 推荐方式：使用内置指令
 
-让 AI 编程工具读取 Issue 内容作为任务上下文：
+- **`/ism:implement <N>`** — 读取 Issue #N，按 Task Checklist 逐项实现。自动拆小步、写测试、做实现、跑验证，每完成一项同步勾选 Issue。
+- **`/ism:implement`** — 不带参数时，列出 open Issues 供你选择。
 
-```
-请阅读 Issue #3，理解任务目标，并按 Task Checklist 逐项实现。
-```
+### 手动方式：逐项实现
 
-### 4.2 拆解任务
+如果需要更细粒度的控制，可以手动让 AI 按以下纪律执行：
 
-将 Task Checklist 拆解为更细的执行步骤（本地 scratch，不入库）：
-
-```
-Task 1: 创建 AGENTS.md
-
-
-### 4.3 按 Checklist 逐项实现
-
-开发纪律：
-
-1. **先理解 Issue**。确保对 Background、Goal 和 AC 有清晰认识。
-2. **先写测试**。对于新功能或 bug fix，先写测试用例。
-3. **小步提交**。每完成一个小的可验证单元后提交。
-4. **运行验证**。实现后执行测试和 lint 命令。
-5. **更新 Issue**。完成后在 Issue checklist 中勾选对应项。
+1. **先理解 Issue** — 确保对 Background、Goal 和 AC 有清晰认识。
+2. **先写测试** — 对于新功能或 bug fix，先写测试用例。
+3. **小步提交** — 每完成一个小的可验证单元后提交。
+4. **运行验证** — 实现后执行测试和 lint 命令。
 
 ```bash
 # 常见验证命令示例（根据项目配置调整）
@@ -211,6 +199,8 @@ git branch -d feat/my-feature
 # 创建 Issue（使用 /ism:explore 和 /ism:create 指令）
 
 # 启动开发（使用 /ism:start <N> 指令）
+
+# 执行开发（使用 /ism:implement <N> 指令）
 
 # 手动创建 worktree
 git fetch origin
