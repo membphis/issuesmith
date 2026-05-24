@@ -127,6 +127,8 @@ issuesmith/
 │   └── pull_request_template.md  # PR 模板
 ├── templates/
 │   └── AGENTS.md           # 可复制的 AI 项目规则模板
+├── examples/
+│   └── README.md           # 端到端示例：idea → PR → 合并 → 沉淀
 └── docs/
     ├── workflow.md         # 详细开发流程
     ├── adr-policy.md       # ADR 策略
