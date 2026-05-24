@@ -1,2 +1,138 @@
-# issuesmith
-Issue-first AI development workflow: from idea to worktree to reviewed PR.
+# IssueSmith
+
+Issue-first AI 开发工作流：用 GitHub Issue 驱动想法到合并的完整闭环。
+
+## 一句话定义
+
+**IssueSmith 是一套轻量个人 AI 开发流程，以 GitHub Issue 作为需求和任务的主载体，以 worktree 隔离开发，以 review 和验证作为合并门禁。**
+
+## 解决什么问题
+
+AI 编程工具写代码很快，但个人开发流程里两个常见痛点：
+
+1. 需求、设计取舍、验收标准散落在聊天记录或本地草稿中，难以复用。
+2. 详细 spec/plan 全量入库容易变成过期文档，反而污染后续 AI 对项目的理解。
+
+IssueSmith 帮你把真正该持久化的信息放到正确位置，而不是要求你维护一套完整 spec 系统。
+
+## 核心原则
+
+- **Issue-first** — 每个非琐碎变更绑定一个 Issue，Issue 承载需求、讨论、验收标准和任务拆分。
+- **Repo 只存事实** — 仓库只保存当前有效事实、测试、关键 ADR 和 AI 项目指令（AGENTS.md）。
+- **本地 plan 不入库** — 临时开发计划只作为执行辅助，不提交到仓库。
+- **Worktree 隔离** — 每个任务使用独立 worktree/branch，开发互不干扰。
+- **验证门禁** — 合并前必须完成验证和 review。
+- **轻量优先** — 不引入复杂状态机、审批流或完整项目管理体系。
+
+## 适用场景
+
+IssueSmith 适合：
+
+- 使用 Claude Code、Codex、Cursor、Copilot CLI 等 AI 编程工具的个人开发者。
+- 希望建立稳定开发纪律，但不想维护复杂企业级 spec 系统的人。
+- 希望把需求沉淀在 GitHub Issue，而不是散落在聊天记录或本地 markdown 中的人。
+
+暂不适合：
+
+- 大型团队协作（多审批流、权限控制、复杂状态机）。
+- 对所有语言和框架的深度集成。
+- 替代 OpenSpec、Spec Kit 或 Superpowers 等现有工作流工具。
+
+## 工作流概览
+
+```
+idea → issue → worktree → implementation → review → PR
+```
+
+| 阶段 | 说明 |
+|------|------|
+| **idea** | 用自然语言描述想法、bug 或重构目标 |
+| **issue** | 转化为 GitHub Issue，包含背景、目标、验收标准、任务清单 |
+| **worktree** | 基于 Issue 创建隔离分支/ worktree |
+| **implementation** | 按 checklist 拆小步执行，边开发边更新 Issue 状态 |
+| **review** | AI 或 self review，验证验收标准 |
+| **PR** | 引用 Issue，说明做了什么、为什么、如何验证 |
+
+## 信息分层
+
+IssueSmith 明确区分四层信息，不同信息有不同的存放位置和生命周期：
+
+| 层级 | 存放位置 | 生命周期 | 示例 |
+|------|----------|----------|------|
+| **Issue / PR** | GitHub | 持久化，作为变更上下文和讨论记录 | `#1 定义项目总纲` |
+| **Repo docs** | 仓库 `docs/` | 持续维护，反映当前事实和关键决策 | `README.md`, `docs/adr/` |
+| **Tests** | 仓库 | 持续维护，可执行行为约束 | 单元测试、集成测试 |
+| **Local scratch** | 本地，不入库 | 临时，任务完成后可丢弃 | 开发 plan、AI 中间推理 |
+
+## 快速开始
+
+### 前置条件
+
+- 一个 GitHub 仓库
+- 安装并配置好一个 AI 编程工具（Claude Code / Codex / Cursor 等）
+- 安装 `git worktree`（Git 自带）
+
+### 第一步：创建你的第一个 Issue
+
+1. 参考 [Issue 模板](.github/ISSUE_TEMPLATE/feature.yml)（TODO: 将在后续任务组创建）创建一个新 Issue。
+2. 包含至少这几个部分：Background、Goal、Acceptance Criteria、Task Checklist。
+
+### 第二步：启动开发
+
+```bash
+# 假设你的 Issue 是 #3
+git fetch origin
+git worktree add -b feat/my-feature ../repo-my-feature main
+```
+
+详细说明见 `docs/worktree-guide.md`（TODO: 将在后续任务组创建）。
+
+### 第三步：执行开发
+
+1. 让 AI 编程工具读取 Issue 内容。
+2. 按 Task Checklist 逐项实现。
+3. 核心行为优先写测试。
+4. 实现后运行验证命令。
+5. 边开发边更新 Issue checklist。
+
+详细流程见 `docs/workflow.md`（TODO: 将在后续任务组创建）。
+
+### 第四步：Review 和 PR
+
+1. 自检 Issue 的 Acceptance Criteria 是否全部满足。
+2. 创建 PR，引用 Issue，说明做了什么、为什么、如何验证。
+3. 参考 [PR 模板](.github/pull_request_template.md)（TODO: 将在后续任务组创建）。
+4. 让 AI 工具做一次 code review。
+
+### 第五步：合并后沉淀
+
+合并后只提交长期有价值的内容：
+
+- 更新 `docs/` 下当前事实文档。
+- 如果变更涉及重要技术决策，创建 ADR（见 `docs/adr-policy.md`，TODO: 将在后续任务组创建）。
+- 不提交临时 plan 或 AI 中间推理。
+
+### 配置 AI 编程工具
+
+将 `templates/AGENTS.md`（TODO: 将在后续任务组创建）复制为 `AGENTS.md`（或 `CLAUDE.md` / `GEMINI.md`），让 AI 工具按 IssueSmith 流程工作。
+
+## 项目结构
+
+```
+issuesmith/
+├── README.md               # 项目入口
+├── AGENTS.md               # AI 项目规则（TODO）
+├── .github/
+│   ├── ISSUE_TEMPLATE/     # Issue 模板（TODO）
+│   └── pull_request_template.md  # PR 模板（TODO）
+├── templates/
+│   └── AGENTS.md           # 可复制的 AI 项目规则模板（TODO）
+└── docs/
+    ├── workflow.md         # 详细开发流程（TODO）
+    ├── adr-policy.md       # ADR 策略（TODO）
+    └── worktree-guide.md   # Worktree 使用指南（TODO）
+```
+
+## 许可证
+
+MIT
