@@ -1,339 +1,339 @@
 ---
 name: issuesmith-implement
-description: Use when implementing an Issue's Task Checklist - reads the Issue first, breaks down tasks, enforces TDD, verifies every change, and updates the Issue after each task
+description: 按 Issue Task Checklist 逐项实现 — 先读 Issue，拆解任务，强制 TDD，每次变更都验证，每完成一项更新 Issue
 ---
 
-# Issuesmith Implementation
+# IssueSmith 实现模式
 
-## Overview
+## 概述
 
-Read the Issue. Break down tasks. Write tests first. Implement. Verify. Update the Issue. Repeat.
+读 Issue。拆任务。先写测试。实现。验证。更新 Issue。重复。
 
-**The Issue is the source of truth.** Every line of code must trace back to the Issue's Goal and Acceptance Criteria. Every completed task must be checked off. Every claim of "done" must be backed by verification evidence.
+**Issue 是唯一真相来源。** 每一行代码都必须追溯到 Issue 的 Goal 和 Acceptance Criteria。每完成一个任务必须勾选。每次声称"完成"都必须有验证证据支撑。
 
-**Violating the letter of the rules is violating the spirit of the rules.**
+**违反这些规则的字面含义，就是违反其精神。**
 
-## The Iron Laws
+## 铁律
 
 ```
-NO CODE WITHOUT READING THE ISSUE FIRST.
-NO IMPLEMENTATION WITHOUT WATCHING A TEST FAIL.
-NO TASK COMPLETE WITHOUT UPDATING THE ISSUE CHECKLIST.
-NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE.
+不读完 Issue 不写代码。
+不看到测试失败不写实现。
+不更新 Issue checklist 不算任务完成。
+没有新鲜的验证证据不声称完成。
 ```
 
-Miss any step? Start the task over.
+跳过任何一步？从头开始这个任务。
 
-## When to Use
+## 适用场景
 
-**Always when implementing code:**
-- New features
-- Bug fixes
-- Refactoring with behavioral changes
-- Documentation with code examples
+**只要写代码就必须遵守：**
+- 新功能
+- Bug 修复
+- 涉及行为变更的重构
+- 包含代码示例的文档
 
-**Exceptions (ask your human partner):**
-- Pure documentation changes (no code)
-- Configuration-only changes
-- Throwaway prototypes
+**例外（需征得你的搭档同意）：**
+- 纯文档变更（无代码）
+- 纯配置变更
+- 一次性原型
 
-Thinking "skip the Issue just this once"? Stop. That's rationalization.
+心想"就这一次跳过 Issue 吧"？打住。这是自我合理化。
 
-## The Issue-First Cycle
+## Issue-First 循环
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                   ISSUE-FIRST CYCLE                  │
+│                   ISSUE-FIRST 循环                    │
 ├─────────────────────────────────────────────────────┤
 │                                                      │
-│  READ ISSUE → BREAK DOWN → [TDD CYCLE] → VERIFY     │
-│       ↑                                      │       │
-│       └────── UPDATE ISSUE CHECKBOX ←────────┘       │
+│  读 ISSUE → 拆解任务 → [TDD 循环] → 验证             │
+│       ↑                                    │         │
+│       └────── 更新 ISSUE 勾选框 ←───────────┘         │
 │                                                      │
 └─────────────────────────────────────────────────────┘
 ```
 
-### Step 1: Read the Issue
+### 步骤 1：读 Issue
 
-Before touching any code, get the full Issue context:
+触碰任何代码之前，先获取 Issue 完整上下文：
 
 ```bash
 gh issue view <N> --json title,body,labels
 ```
 
-If no Issue number was provided, list open Issues first:
+如果用户没给 Issue 编号，先列出来：
 
 ```bash
 gh issue list --state open --json number,title,labels --limit 20
 ```
 
-Internalize every section:
-- **Background** — why this matters
-- **Goal** — what success looks like
-- **Non-goals** — explicit boundaries (do not cross them)
-- **Acceptance Criteria** — the testable outcomes
-- **Task Checklist** — checked `[x]` vs unchecked `[ ]`
-- **Notes/Decisions** — trade-offs and context
+消化每一个部分：
+- **Background** — 为什么要做这件事
+- **Goal** — 成功的标准是什么
+- **Non-goals** — 明确边界（不可逾越）
+- **Acceptance Criteria** — 可验证的验收条件
+- **Task Checklist** — 已勾选 `[x]` vs 未勾选 `[ ]`
+- **Notes/Decisions** — 取舍和上下文
 
-If anything is unclear, **stop and ask**. Do not guess.
+有哪里不清楚？**停下来问。** 不要猜。
 
-### Step 2: Assess State
+### 步骤 2：评估状态
 
-Find the first unchecked task. Show progress.
+找到第一个未勾选的任务。展示进度。
 
 ```
-Progress: 3/8 tasks done. Starting task 4: Add filterTasks utility.
+进度: 3/8 完成, 开始任务 4: 添加 filterTasks 工具函数。
 ```
 
-All tasks done? Announce completion and suggest moving to review/PR.
+全部完成了？通告完成，建议进入 review/PR。
 
-### Step 3: Break Down the Current Task
+### 步骤 3：拆解当前任务
 
-Split the task into bite-sized sub-steps. Each sub-step is a single concrete action — one file to create, one function to write, one test to add.
+把任务拆成一口大小的子步骤。每个子步骤只做一件事 — 创建一个文件、写一个函数、添加一个测试。
 
 <Good>
 ```
-Task 4: Add filterTasks utility
+任务 4: 添加 filterTasks 工具函数
 
-  - 4.1 Write failing test for filterTasks (edge cases first)
-  - 4.2 Watch test fail
-  - 4.3 Write minimal filterTasks implementation
-  - 4.4 Watch test pass + run full suite
-  - 4.5 Integrate into TaskList component (same TDD cycle)
-  - 4.6 Run lint + commit
+  - 4.1 写 filterTasks 失败测试（先写边界用例）
+  - 4.2 观察测试失败
+  - 4.3 写最小 filterTasks 实现
+  - 4.4 观察测试通过 + 运行全量测试
+  - 4.5 集成到 TaskList 组件（同样 TDD 循环）
+  - 4.6 运行 lint + 提交
 ```
-Each step is one action. Tests before code. One thing at a time.
+每步一个动作。测试在代码之前。一次只做一件事。
 </Good>
 
 <Bad>
 ```
-Task 4: Add filterTasks utility
+任务 4: 添加 filterTasks 工具函数
 
-  - 4.1 Implement filterTasks and use it in TaskList
-  - 4.2 Add tests
-  - 4.3 Handle edge cases and error states
+  - 4.1 实现 filterTasks 并用在 TaskList 里
+  - 4.2 补测试
+  - 4.3 处理边界和错误
 ```
-Implementation before tests. Multiple actions per step. "Handle edge cases" is a placeholder, not a step.
+实现在前测试在后。一步里混了多个动作。"处理边界"是占位符，不是步骤。
 </Bad>
 
-**Breakdowns stay in the conversation. Never write them to local files.**
+**拆解仅存于对话中。绝不写入本地文件。**
 
-### Step 4: The TDD Cycle
+### 步骤 4：TDD 循环
 
-For every sub-step that produces code, follow the RED-GREEN-REFACTOR cycle:
+对每个产出代码的子步骤，遵循 RED-GREEN-REFACTOR 循环：
 
-**RED — Write the failing test**
+**RED — 写失败测试**
 
-Write one minimal test showing what should happen. One behavior. Clear name. Real code.
+写一个最简单的测试来展示期望行为。一个行为。清晰命名。真实代码。
 
 ```
-test('filterTasks matches title case-insensitively', () => {
-  const tasks = [{ title: 'Buy Milk' }, { title: 'Write Code' }];
-  expect(filterTasks(tasks, 'milk')).toHaveLength(1);
+test('filterTasks 大小写不敏感匹配标题', () => {
+  const tasks = [{ title: '买牛奶' }, { title: '写代码' }];
+  expect(filterTasks(tasks, '牛奶')).toHaveLength(1);
 });
 ```
 
-**Verify RED — Watch it fail (MANDATORY)**
+**验证 RED — 看着它失败（必修）**
 
 ```bash
 npm test -- --testPathPattern=filterTasks
 ```
 
-Confirm: test fails (not errors), failure message is expected, fails because feature missing (not typos).
+确认：测试失败了（不是报错），失败信息符合预期，失败原因是功能缺失（不是拼写错误）。
 
-**Test passes?** You're testing existing behavior. Fix the test.
-**Test errors?** Fix the error, re-run until it fails correctly.
+**测试通过了？** 你在测已有行为。修测试。
+**测试报错？** 修错误，重跑到正确失败为止。
 
-**GREEN — Minimal code**
+**GREEN — 最小代码**
 
-Write the simplest code to pass the test. Nothing more.
+写最简单的代码让测试通过。不多不少。
 
 ```
 function filterTasks(tasks, query) {
-  return tasks.filter(t => t.title.toLowerCase().includes(query.toLowerCase()));
+  return tasks.filter(t => t.title.includes(query));
 }
 ```
 
-Don't add features. Don't refactor other code. Don't "improve" beyond the test.
+不加功能。不改其他代码。不在测试范围之外"优化"。
 
-**Verify GREEN — Watch it pass (MANDATORY)**
+**验证 GREEN — 看着它通过（必修）**
 
 ```bash
 npm test -- --testPathPattern=filterTasks
 ```
 
-Confirm: test passes, other tests still pass, output pristine.
+确认：测试通过，其他测试仍通过，输出干净无警告。
 
-**Test fails?** Fix code, not test.
-**Other tests fail?** Fix now. Don't push forward.
+**测试失败？** 修代码，不修测试。
+**其他测试失败？** 马上修。别往前推。
 
-**REFACTOR — Clean up**
+**REFACTOR — 清理**
 
-After green only: remove duplication, improve names, extract helpers. Keep tests green. Don't add behavior.
+仅在通过之后：去重、改善命名、提取辅助函数。保持测试全绿。不加行为。
 
-### Step 5: Verify Before Completion
+### 步骤 5：验证再声称完成
 
-Before claiming any task is complete, run the verification gate:
+声称任何任务完成之前，先过验证关卡：
 
 ```
-1. IDENTIFY: What command proves this task is done?
-2. RUN: Execute the FULL command (fresh, complete)
-3. READ: Full output, check exit code, count failures
-4. VERIFY: Does output confirm the claim?
-5. ONLY THEN: Make the claim
+1. 确认：什么命令能证明这个任务完成？
+2. 运行：执行完整命令（全新、完整运行）
+3. 读取：完整输出，检查退出码，数失败数
+4. 验证：输出是否证实了你的声称？
+5. 确认之后：再做出声称
 ```
 
 ```bash
 npm test && npm run lint
 ```
 
-No claiming "should work" or "looks correct." Run the command. Read the output. THEN claim the result.
+不准说"应该能过"或"看起来对了"。运行命令。读取输出。然后才做声称。
 
-### Step 6: Commit
+### 步骤 6：提交
 
-Stage only the files relevant to this task. Write a descriptive message:
+只暂存此任务相关的文件。写描述性提交信息：
 
 ```bash
 git add <files>
-git commit -m "feat: add filterTasks utility with case-insensitive matching"
+git commit -m "feat: 添加 filterTasks 工具函数，支持大小写不敏感匹配"
 ```
 
-One task = one commit. No batching unrelated changes. No "WIP" or "fix stuff" messages.
+一个任务 = 一次提交。不攒一堆。不写"WIP"或"fix stuff"。
 
-### Step 7: Update the Issue
+### 步骤 7：更新 Issue
 
-After completing each top-level Task Checklist item, check it off:
+每完成一个顶层 Task Checklist 项，立刻勾选：
 
 ```bash
-gh issue view <N> --json body  # get current body
-gh issue edit <N> --body "<updated body with - [x] for completed task>"
+gh issue view <N> --json body  # 获取当前正文
+gh issue edit <N> --body "<更新后的正文，对应项改为 - [x]>"
 ```
 
-Preserve exact formatting. Only change the checkbox for the completed task. Show the user what was updated.
+保持原始格式不变。只修改已完成任务的勾选框。展示给用户看。
 
-### Step 8: Continue or Complete
+### 步骤 8：继续或收尾
 
-Show progress and ask:
+展示进度并询问：
 
 ```
-Task 4 complete. Progress: 4/8 tasks done.
+任务 4 完成。进度: 4/8 tasks done。
 
-Next: Task 5 — Integrate filterTasks into TaskList. Continue?
+下一个: 任务 5 — 将 filterTasks 集成到 TaskList。继续吗？
 ```
 
-User says continue → go back to Step 2 (re-read the Issue, pick next task).
-All tasks done → final verification, suggest review/PR.
+用户说继续 → 回到步骤 2（重读 Issue，找下一个任务）。
+全部完成 → 做最终验证，建议进入 review/PR。
 
-## Common Rationalizations
+## 常见自我合理化
 
-| Excuse | Reality |
-|--------|---------|
-| "I already know what the Issue says" | Memory is not evidence. Re-read it. |
-| "Too simple to test" | Simple code breaks. Test takes 30 seconds. |
-| "I'll write tests after" | Tests passing immediately proves nothing. |
-| "I'll update the Issue later" | You'll forget. Update now. |
-| "Tests after achieve the same goals" | Tests-after = "what does this do?" Tests-first = "what should this do?" |
-| "Should work now" | RUN the verification. Should ≠ does. |
-| "This breakdown is just for me" | If it's not worth writing down, it's not a plan. |
-| "Just this once, skip the Issue" | The Issue is your contract. Skipping it voids the contract. |
-| "I'll commit all changes at the end" | Small commits = reversible steps. Big commits = unrecoverable mess. |
-| "Keeping plan files local is fine" | Local plans committed accidentally become stale docs. Keep in conversation. |
+| 借口 | 真相 |
+|------|------|
+| "我记得 Issue 里写了什么" | 记忆不是证据。重读。 |
+| "太简单了不用测" | 简单代码也会坏。测试只要 30 秒。 |
+| "我之后再写测试" | 测试立即通过什么都证明不了。 |
+| "我之后更新 Issue" | 你会忘。现在更新。 |
+| "之后再测试结果一样" | 后写测试 = "这段代码干什么？" 先写测试 = "这段代码应该干什么？" |
+| "应该能过" | 运行验证。"应该" ≠ "确实"。 |
+| "拆解是我自己看的" | 不值得写下来的不是计划。 |
+| "就这一次跳过 Issue" | Issue 是你的合同。跳过就是毁约。 |
+| "最后一起提交" | 小步提交 = 可回溯的台阶。大堆提交 = 不可恢复的废墟。 |
+| "本地放个 plan 文件无所谓" | 本地 plan 不小心提交后变成过期文档。留在对话里。 |
 
-## Red Flags — STOP and Correct
+## 红灯 — 停止并纠正
 
-- Code written before reading the Issue
-- Code written before watching a test fail
-- Test passes immediately on first run
-- Task marked complete without updating the Issue
-- Claiming "done" without running verification
-- Using "should", "probably", "seems to work"
-- Local plan files created on disk
-- Batching unrelated changes in one commit
-- Implementing beyond the Issue's Non-goals
-- Guessing when Issue is ambiguous (ASK instead)
+- 没读 Issue 就开始写代码
+- 没看到测试失败就写实现
+- 测试第一次运行就通过
+- 标记任务完成但没更新 Issue
+- 没跑验证就声称"好了"
+- 用"应该"、"大概"、"看起来能跑"
+- 在磁盘上创建了本地 plan 文件
+- 一次提交里掺杂了不相关的改动
+- 实现了超出 Issue Non-goals 的内容
+- Issue 有歧义却在猜测（应该问）
 
-**Any of these means: stop, correct, then continue.**
+**出现任何一条：停下来，纠正，再继续。**
 
-## Verification Checklist
+## 完成前验证清单
 
-Before marking any task complete:
+标记任何任务完成之前：
 
-- [ ] Read the Issue section relevant to this task
-- [ ] Watched each test fail before implementing
-- [ ] Each test failed for the expected reason (feature missing, not typo)
-- [ ] Wrote minimal code to pass each test
-- [ ] All tests pass (fresh run, full suite)
-- [ ] Linter clean (fresh run)
-- [ ] Committed with descriptive message
-- [ ] Updated the Issue checkbox
+- [ ] 已读完 Issue 中与本任务相关的部分
+- [ ] 每个测试都先看着它失败再写实现
+- [ ] 每个测试失败原因如预期（功能缺失，不是拼写错误）
+- [ ] 写的是让测试通过的最小代码
+- [ ] 全部测试通过（全新运行，全量）
+- [ ] Linter 干净（全新运行）
+- [ ] 提交信息描述性强
+- [ ] 已更新 Issue 勾选框
 
-Can't check all boxes? You skipped a step. Go back.
+不能全打勾？你跳了某一步。退回去。
 
-## Key Patterns
+## 模式速查
 
-**Starting a task:**
+**开始任务：**
 ```
-✅ [Read Issue] → "Task 4: Add filterTasks. 3/8 done. Breaking it down..."
-❌ Jumping straight to code without acknowledging the Issue
-```
-
-**TDD:**
-```
-✅ Write test → Run (fail) → Write code → Run (pass) → Commit
-❌ Write code → Write test → Run (pass) → "TDD done"
+✅ [读 Issue] → "任务 4: 添加 filterTasks。3/8 完成。正在拆解..."
+❌ 不确认 Issue 直接跳去写代码
 ```
 
-**Verification:**
+**TDD：**
 ```
-✅ [Run npm test] [See: 34/34 pass] "All tests pass"
-❌ "Should pass now" / "Looks correct"
-```
-
-**Updating Issue:**
-```
-✅ [gh issue edit] → "Checked off task 4 in Issue #7"
-❌ "I'll update the Issue after all tasks are done"
+✅ 写测试 → 跑（失败）→ 写代码 → 跑（通过）→ 提交
+❌ 写代码 → 写测试 → 跑（通过）→ "TDD 完成"
 ```
 
-**Failing test for bug fix:**
+**验证：**
 ```
-✅ Write test reproducing bug → Watch it fail (proves bug exists) → Fix → Watch it pass (proves fix)
-❌ Fix the bug → Write test (passes immediately, proves nothing)
+✅ [跑 npm test] [看见: 34/34 通过] "全部测试通过"
+❌ "应该能过" / "看着没问题"
 ```
 
-## When Stuck
+**更新 Issue：**
+```
+✅ [gh issue edit] → "已在 Issue #7 中勾选任务 4"
+❌ "等全部做完再统一更新 Issue"
+```
 
-| Problem | Solution |
-|---------|----------|
-| Issue description is ambiguous | Stop. Ask the user. Don't guess. |
-| Don't know how to test | Write the assertion first. Write the wished-for API. |
-| Test too complicated | Design too complicated. Simplify the interface. |
-| Breaking down seems impossible | Task is too big. Ask the user to split the Issue task. |
-| Verification keeps failing | Don't force through. Stop and investigate the root cause. |
-| Scope expanding beyond Non-goals | Remind the user of Non-goals. Suggest a new Issue. |
+**Bug 修复的回归测试：**
+```
+✅ 写重现 bug 的测试 → 看着它失败（证明 bug 存在）→ 修复 → 看着它通过（证明修复有效）
+❌ 修 bug → 写测试（立即通过，什么也证明不了）
+```
 
-## When to Stop and Ask
+## 卡住时
 
-**Stop implementing immediately when:**
-- Issue description is unclear or contradictory
-- Acceptance Criteria can't be verified
-- A Non-goal blocks the implementation path
-- Verification fails repeatedly with no clear cause
-- The task requires decisions not captured in the Issue
+| 问题 | 解法 |
+|------|------|
+| Issue 描述有歧义 | 停。问用户。别猜。 |
+| 不知道怎么测 | 先写断言。先写你想要的 API。 |
+| 测试太复杂 | 设计太复杂。简化接口。 |
+| 拆解不了 | 任务太大。让用户拆分 Issue 任务。 |
+| 验证反复失败 | 别硬推。停下来查根因。 |
+| 范围超出 Non-goals | 提醒用户 Non-goals。建议新建 Issue。 |
 
-**Asking for clarification is faster than implementing wrong.**
+## 何时停下来问
 
-## Integration
+**以下情况立即停止实现：**
+- Issue 描述不清楚或有矛盾
+- Acceptance Criteria 无法验证
+- Non-goal 阻碍了实现路径
+- 验证反复失败且原因不明
+- 任务需要 Issue 中未记录的决策
 
-This skill works with other IssueSmith commands:
-- **`/ism:start`** — Creates the isolated worktree for this implementation
-- **`/ism:explore`** — Use before creating Issues to explore the problem space
-- **`/ism:create`** — Creates the Issue that this skill implements
+**问清楚再写，比写错了再改快得多。**
 
-When all tasks are complete, move to review and PR creation.
+## 与其他指令的关系
 
-## The Bottom Line
+本 skill 与 IssueSmith 其他指令配合使用：
+- **`/ism:start`** — 为此实现创建隔离 worktree
+- **`/ism:explore`** — 创建 Issue 前探索问题空间
+- **`/ism:create`** — 创建本 skill 实现的 Issue
 
-**Issue is the source of truth. Tests are the proof. Verification is the gate. The Issue checklist is the scoreboard.**
+全部任务完成后，进入 review 和 PR 阶段。
 
-These are non-negotiable.
+## 底线
+
+**Issue 是真相来源。测试是证据。验证是门禁。Issue checklist 是记分板。**
+
+这些不可协商。
