@@ -107,7 +107,7 @@ IssueSmith 明确区分四层信息，不同信息有不同的存放位置和生
 
 详细流程见 `docs/workflow.md`。
 
-### 第四步：Review 和 PR
+### 第四步：PR、Review 和 Merge
 
 实现完成后使用内置指令收尾开发分支。`/ism:implement` 全部任务完成后会自动引导进入此步骤。
 
@@ -121,11 +121,11 @@ IssueSmith 明确区分四层信息，不同信息有不同的存放位置和生
 
 ### 第五步：合并后沉淀
 
-合并后只提交长期有价值的内容：
+以上四步已经覆盖了开发全流程。几点补充提醒：
 
-- 更新 `docs/` 下当前事实文档。
-- 如果变更涉及重要技术决策，创建 ADR（见 `docs/adr-policy.md`）。
-- 不提交临时 plan 或 AI 中间推理。
+- 文档更新（`docs/` 下的当前事实文档）应在 `/ism:implement` 或 `/ism:finish` 阶段完成，而非合并后补。
+- ADR 决策应在开发中做出（见 `docs/adr-policy.md`），进入 PR 前写入。
+- 本地 plan 和临时文件不会被提交 — `/ism:implement` 已强制约束。
 
 ### 配置 AI 编程工具
 
