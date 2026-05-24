@@ -23,54 +23,37 @@
 
 ## IssueSmith 工作流
 
-每个非琐碎的开发任务必须严格按照以下流程执行：
+每个非琐碎的开发任务按以下四步执行，使用内置 `/ism:***` 指令：
 
-### 1. 读取 Issue
+### 第一步：创建 Issue（`/ism:explore` → `/ism:create`）
 
-- 任务开始时，必须先完整读取对应的 GitHub Issue。
-- 理解 Background、Goal、Non-goals、Acceptance Criteria 和 Task Checklist。
-- 如果还有不明确的地方，**先提出问题，不要猜测**。
+- `/ism:explore` — 思考伙伴模式。探索问题空间、检查已有 Issues、对比方案。不写代码。
+- `/ism:create` — 逐节引导生成 Issue（Background → Goal → Non-goals → AC → Tasks → Notes），确认后通过 `gh issue create` 发布。
 
-### 2. 拆解任务
+如果 Issue 还有不明确的地方，**先提出问题，不要猜测**。
 
-- 将 Issue 中的 Task Checklist 进一步拆解为可执行的小步骤。
-- 每个步骤应足够小，能在一次对话中完成。
-- 本地 plan 可以写下来帮助思考，但**不要提交到仓库**。
+### 第二步：启动开发（`/ism:start`）
 
-### 3. 创建 Worktree / Branch
+- `/ism:start <N>` — 读取 Issue #N，自动推导分支名，创建隔离 worktree 并安装依赖。
+- 每个实现任务必须在独立 worktree 中执行，不在主仓库直接修改。
 
-- 每个实现任务使用独立分支或 worktree：
-  ```bash
-  git worktree add -b feat/<short-name> ../<repo>-<short-name> main
-  ```
-- Worktree 确保开发隔离，不影响主工作区。
-- 详细命令和常见场景参考 `docs/worktree-guide.md`。
+### 第三步：执行开发（`/ism:implement`）
 
-### 4. 实现
-
-执行实现时遵守以下纪律：
+在 worktree 内调用 `/ism:implement`，AI 会按以下纪律执行：
 
 - **先理解 Issue**：不要跳过 Issue 直接改代码。
-- **按 checklist 拆小步**：每完成一步，更新 Issue 或本地 checklist。
+- **按 checklist 拆小步**：将 Task Checklist 拆解为可执行步骤，仅存于对话中，不入库。
 - **核心行为优先写测试**：对于新功能或 bug fix，先写测试再写实现。
 - **实现后运行验证**：执行项目中的测试命令和 lint 命令，确保通过。
-- **边开发边更新 Issue**：完成后勾选对应的 checklist 项。
+- **边开发边更新 Issue**：完成后用 `gh issue edit` 勾选对应的 checklist 项。
 
-### 5. 验证
+全部任务完成后自动引导进入第四步。
 
-合并前必须完成以下验证：
+### 第四步：收尾（`/ism:finish`）
 
-- 运行完整测试套件。
-- 对照 Issue 的 Acceptance Criteria 逐项检查。
-- 检查是否有遗留的调试代码、临时文件或硬编码值。
-- 确认没有无意中将本地 scratch 文件提交。
-
-### 6. 创建 PR
-
-- PR 引用关联的 Issue（`Closes #N`）。
-- 使用 `.github/pull_request_template.md` 模板。
-- 说明：做了什么、为什么这样做、如何验证。
-- 标注是否有 breaking changes，是否更新了 docs/ADR。
+- `/ism:finish` — 最终验证 → AC 检查 → 推送 → 创建 PR → CI 等待 → AI review → 由用户选择合并方式。
+- 合并不自动执行，需人工确认。
+- 辅助工具：`/ism:verify`（证据级验证）、`/ism:code-review`（系统化 review）。
 
 ## ADR 写入时机判断
 
@@ -95,6 +78,7 @@
 - Worktree 使用指南见 `docs/worktree-guide.md`。
 - ADR 策略和模板见 `docs/adr-policy.md`。
 - PR 模板为 `.github/pull_request_template.md`。
+- 辅助 skill：`skills/issuesmith-verify/SKILL.md`、`skills/issuesmith-code-review/SKILL.md`。
 
 ## 实现时的行为准则
 

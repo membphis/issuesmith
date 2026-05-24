@@ -5,7 +5,7 @@
 ## 流程总览
 
 ```
-idea → issue → worktree/branch → implementation → review → PR/merge → docs/ADR update
+idea → explore → create Issue → start worktree → implement → finish (review/PR/merge)
 ```
 
 ## 第 1 步：捕获想法
@@ -84,8 +84,7 @@ cd ../repo-my-feature
 
 ### 推荐方式：使用内置指令
 
-- **`/ism:implement <N>`** — 读取 Issue #N，按 Task Checklist 逐项实现。自动拆小步、写测试、做实现、跑验证，每完成一项同步勾选 Issue。
-- **`/ism:implement`** — 不带参数时，列出 open Issues 供你选择。
+- **`/ism:implement`** — 在 worktree 内执行实现模式：自动拆小步、写测试、做实现、跑验证，每完成一项同步勾选 Issue。
 
 ### 手动方式：逐项实现
 
@@ -113,7 +112,7 @@ pytest
 
 ### 推荐方式：使用内置指令
 
-- **`/ism:finish`** — 最终验证 → 逐项检查 AC → 清理检查 → 推送 → 自动填充 PR 模板 → CI 等待 → AI review → 合并。`/ism:implement` 全部任务完成后会自动引导进入此步骤。
+- **`/ism:finish`** — 最终验证 → 逐项检查 AC → 清理检查 → 推送 → 自动填充 PR 模板 → CI 等待 → AI review → 由你选择合并方式。`/ism:implement` 全部任务完成后会自动引导进入此步骤。
 
 ### 手动方式：逐项执行
 
@@ -168,6 +167,8 @@ gh pr merge --squash
 
 ## 第 6 步：合并后沉淀
 
+> 文档更新和 ADR 决策应在 `/ism:implement` 或 `/ism:finish` 阶段完成。以下为参考清单。
+
 合并后只提交长期有价值的内容。根据变更的性质决定：
 
 ### 需要更新的内容
@@ -206,13 +207,13 @@ git branch -d feat/my-feature
 ```bash
 # 创建 Issue（使用 /ism:explore 和 /ism:create 指令）
 
-# 启动开发（使用 /ism:start <N> 指令）
+# 启动开发（使用 /ism:start 指令）
 
 # 执行开发（使用 /ism:implement 指令）
 
-# Review 和 PR（使用 /ism:finish 指令）
+# 收尾（使用 /ism:finish 指令）
 
-# 验证和 Code Review（辅助指令）
+# 辅助：验证和 Code Review
 # /ism:verify  — 证据级验证
 # /ism:code-review — 系统化 review
 

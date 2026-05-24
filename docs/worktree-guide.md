@@ -227,5 +227,5 @@ git worktree remove --force ../repo-my-feature
 
 ## 相关文档
 
-- `docs/workflow.md` — IssueSmith 完整开发流程（含 worktree 在第 3 步的说明）
-- `AGENTS.md` — AI 项目规则（含 worktree 创建指令）
+- `docs/workflow.md` — IssueSmith 完整开发流程（worktree 由 `/ism:start` 命令创建）
+- `AGENTS.md` — AI 项目规则（含 `/ism:start` 指令说明）
