@@ -8,9 +8,27 @@
 
 ## 快速开始
 
+### 安装
+
+**OpenCode（推荐）：**
+
+在目标项目的 `opencode.json` 中添加：
+
+```json
+{
+  "plugin": ["issuesmith@git+https://github.com/membphis/issuesmith.git"]
+}
+```
+
+重启 OpenCode 即可使用。也可以直接在 OpenCode 中告诉它：
+
+```
+Fetch and follow instructions from https://raw.githubusercontent.com/membphis/issuesmith/refs/heads/main/.opencode/INSTALL.md
+```
+
 ### 前置条件
 
-- GitHub 仓库 + AI 编程工具（Claude Code / Codex / Cursor 等）
+- GitHub 仓库 + OpenCode（或其他 AI 编程工具）
 - `git worktree`（Git 自带）+ `gh` CLI
 
 ### 第一步：创建 Issue
