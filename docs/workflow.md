@@ -53,9 +53,14 @@ Task Checklist:
 
 ## 第 3 步：启动开发
 
-### 创建隔离工作区
+### 推荐方式：使用内置指令
 
-每个实现任务使用独立 worktree/branch，确保开发隔离：
+- **`/ism:start <N>`** — 基于 Issue #N 自动创建 worktree：读取 Issue → 推导分支名 → 确认 → 创建 → 安装依赖。
+- **`/ism:start`** — 不带参数时，列出最近 open Issues 供你选择。
+
+### 手动方式：创建隔离工作区
+
+如果需要手动控制参数，可以自行创建 worktree/branch：
 
 ```bash
 # 假设你的 Issue 是 #3，feature 名为 my-feature
@@ -205,7 +210,9 @@ git branch -d feat/my-feature
 ```bash
 # 创建 Issue（使用 /ism:explore 和 /ism:create 指令）
 
-# 创建 worktree
+# 启动开发（使用 /ism:start <N> 指令）
+
+# 手动创建 worktree
 git fetch origin
 git worktree add -b feat/<name> ../<repo>-<name> main
 

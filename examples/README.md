@@ -60,9 +60,15 @@
 
 ---
 
-## 第 2 步：创建 Worktree
+## 第 2 步：启动开发
 
-Issue 创建后（假设编号为 `#42`），在本地创建隔离的 worktree 开始开发：
+使用 `/ism:start 42` 指令一键创建 worktree。AI 会自动读取 Issue #42，推导分支名和 worktree 路径，确认后创建并安装依赖：
+
+```bash
+/ism:start 42
+```
+
+你也可以手动创建 worktree：
 
 ```bash
 # 确保主仓库是最新的
@@ -310,14 +316,12 @@ git branch -d feat/task-search
 以下是本示例中使用的全部命令，可按顺序复制执行：
 
 ```bash
-# === 第 2 步：创建 Worktree ===
-cd ~/projects/todo-app
-git fetch origin
-git checkout main
-git pull origin main
-git worktree add -b feat/task-search ../todo-app-search main
+# === 第 1 步：创建 Issue ===
+/ism:create
+
+# === 第 2 步：启动开发 ===
+/ism:start 42
 cd ../todo-app-search
-npm install
 
 # === 第 3 步：开发 ===
 # （在 AI 工具辅助下实现功能）

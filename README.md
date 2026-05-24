@@ -81,13 +81,17 @@ IssueSmith 明确区分四层信息，不同信息有不同的存放位置和生
 
 ### 第二步：启动开发
 
-```bash
-# 假设你的 Issue 是 #3
-git fetch origin
-git worktree add -b feat/my-feature ../repo-my-feature main
-```
+使用内置指令一键创建隔离开发环境，自动完成 worktree 创建、分支命名和依赖安装：
 
-详细说明见 `docs/worktree-guide.md`。
+- **`/ism:start <N>`** — 基于 Issue #N 自动创建 worktree：读取 Issue → 推导分支名 → 确认 → 创建 → 安装依赖。
+- **`/ism:start`** — 不带参数时，列出最近 open Issues 供你选择，再创建 worktree。
+
+自动行为：
+- 从 Issue 标签推导分支前缀（`enhancement` → `feat/`、`bug` → `fix/` 等）
+- 从 Issue 标题推导分支短名（如 `添加暗色模式` → `add-dark-mode`）
+- 自动检测 `package.json` / `requirements.txt` 等并安装依赖
+
+详细命令和常见场景见 `docs/worktree-guide.md`。
 
 ### 第三步：执行开发
 
