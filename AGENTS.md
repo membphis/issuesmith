@@ -47,11 +47,14 @@
 - **实现后运行验证**：执行项目中的测试命令和 lint 命令，确保通过。
 - **边开发边更新 Issue**：完成后用 `gh issue edit` 勾选对应的 checklist 项。
 
-全部任务完成后自动引导进入第四步。
+独立调用时任务间暂停确认，完成后询问是否进入收尾。被 `/ism:finish` 内部调用时不暂停，完成后直接续接 PR 流程。
 
 ### 第四步：收尾（`/ism:finish`）
 
-- `/ism:finish` — 最终验证 → AC 检查 → 推送 → 创建 PR → CI 等待 → AI review → 由用户选择合并方式。
+- `/ism:finish` — 智能收尾，也是一键入口。自动检测当前状态：
+  - 无 worktree → 引导 Issue 编号 → 自动 start + implement → PR
+  - 在 worktree 但实现未完成 → 自动补齐剩余任务 → PR
+  - 实现已完成 → 最终验证 → AC 检查 → 推送 → 创建 PR → CI 等待 → AI review
 - 合并不自动执行，需人工确认。
 - 辅助工具：`/ism:verify`（证据级验证）、`/ism:code-review`（系统化 review）。
 
@@ -87,3 +90,15 @@
 3. **Local scratch 不入库**：如果你在开发中创建了临时 markdown 或笔记，任务完成后删除它们。
 4. **保持轻量**：IssueSmith 是轻量工作流，不要自行引入复杂项目管理工具或状态机。
 5. **遇到不确定项时先确认**：如果 Issue 描述不清、AC 存在歧义，先与用户澄清，再动工。
+
+## 联动更新规则（强制）
+
+修改以下文件时，**必须同步检查并更新**对应的对外文档，确保行为描述一致：
+
+| 修改对象 | 联动检查 |
+|---------|---------|
+| `skills/issuesmith-*.md` | `commands/ism-*.md`、`README.md`、`AGENTS.md`、`docs/workflow.md` |
+| `commands/ism-*.md` | `README.md`、`AGENTS.md`、`docs/workflow.md` |
+| 流程 / 指令行为变更 | `README.md`、`AGENTS.md`、`docs/workflow.md` |
+
+**检查方法：** 改完 skill 或 command 后，通读 `README.md` 和 `AGENTS.md` 中对应的指令描述段落，确认是否仍准确。不准确则更新。不要等用户提醒。

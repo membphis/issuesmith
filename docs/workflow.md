@@ -112,7 +112,7 @@ pytest
 
 ### 推荐方式：使用内置指令
 
-- **`/ism:finish`** — 最终验证 → 逐项检查 AC → 清理检查 → 推送 → 自动填充 PR 模板 → CI 等待 → AI review → 由你选择合并方式。`/ism:implement` 全部任务完成后会自动引导进入此步骤。
+- **`/ism:finish`** — 智能收尾，也是一键入口：自动检测当前状态，若未创建 worktree 则引导 Issue 编号后自动 start → implement → PR；若实现未完成则自动补齐任务 → PR；若已完成则进入最终验证 → 逐项检查 AC → 清理检查 → 推送 → 自动填充 PR 模板 → CI 等待 → AI review → 由你选择合并方式。
 
 ### 手动方式：逐项执行
 

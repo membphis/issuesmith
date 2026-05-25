@@ -1,15 +1,19 @@
 ---
 name: issuesmith-finish
-description: 实现完成后收尾开发分支 — 最终验证、创建 PR、自检 review、等待 CI、处理第三方 review、合并、清理 worktree
+description: 智能收尾指令 — 根据状态自动创建 worktree、实现代码、创建 PR、自检 review、等待 CI、处理第三方 review、合并、清理 worktree
 ---
 
-# IssueSmith 收尾 — 完成开发分支
+# IssueSmith 收尾 — 一键完成开发到 PR
 
 ## 概述
 
-验证。检查。推送。创建 PR。Review。等待确认。合并。
+智能入口指令。根据当前项目状态自动判断下一步操作：
 
-**人不确认不合。** 所有检查通过后，由你选择收尾方式，不自动合并。
+- **无 worktree** → 引导提供 Issue 编号 → 自动创建 worktree → 实现 → PR
+- **有 worktree，实现未完成** → 自动继续实现 → PR
+- **实现已完成** → 直接进入 PR 创建、CI 等待、Review、合并流程
+
+所有检查通过后，由你选择合并方式，不自动合并。
 
 **违反这些规则的字面含义，就是违反其精神。**
 
@@ -25,21 +29,64 @@ Review 意见不逐条处理不合并。
 
 跳过任何一步？退回去补上。
 
-## 前置条件
+## 智能入口检测
 
-本 skill 必须在实现完成后的 worktree 中执行。如果是 `/ism:implement` 完成后自动流到这里，校验已通过。如果是手动调用，先确认：
+`/ism:finish` 被调用时，首先检测当前状态，自动选择正确路径。
+
+### 步骤 0.1：检测 worktree 状态
 
 ```bash
 git worktree list
+git branch --show-current
 ```
 
-当前目录必须是 feature worktree（不是主 worktree），且分支已有提交。
+判断当前所在位置。
 
-## Review 流程
+### 步骤 0.2：情况 A — 无 worktree / 不在 worktree 内
+
+当前不在任何 feature worktree 中（在主机目录或无 worktree）。
+
+**操作：**
+
+1. 如果用户未提供 Issue 编号，提示用户提供：
+   ```
+   当前未进入任何 feature worktree。请提供 Issue 编号：
+   
+     /ism:finish <Issue 编号>
+   ```
+   如果用户已通过命令行参数提供编号，跳过此询问。
+
+2. 拿到 Issue 编号后，自动执行 `issuesmith-start` 流程（**自动模式**——跳过分支名确认和摘要暂停）：
+   - 读取 Issue → 推导分支名 → 创建 worktree → 安装依赖
+   - 完成后无缝进入情况 B
+
+### 步骤 0.3：情况 B — 在 worktree 内，实现未完成
+
+当前在 feature worktree 中，但 Issue Task Checklist 有未勾选项。
+
+**操作：**
+
+自动执行 `issuesmith-implement` 流程（**自动模式**）：
+- 读取 Issue，找到第一个未勾选任务
+- 逐任务实现，任务间**不暂停询问"继续吗？"**
+- 遇到 Issue 歧义时**仍会暂停询问用户**（不自动猜测）
+- 全部任务完成后，不询问，直接进入标准 PR 流程（跳到步骤 1）
+
+### 步骤 0.4：情况 C — 实现已完成
+
+当前在 feature worktree 中，Issue Task Checklist 全部 `[x]`，且有提交记录。
+
+**操作：**
+
+直接进入标准 PR 流程（步骤 1-11）。
+
+## 标准 PR 流程
+
+以下步骤在实现完成后执行。情况 C 直接进入，情况 A/B 在实现完成后自动衔接，不询问确认。
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│                    FINISH 流程                              │
+│                    FINISH 流程                                    │
 ├──────────────────────────────────────────────────────────────────┤
 │                                                                   │
 │  最终验证 → AC 检查 → 清理检查 → 推送 → 创建 PR                  │
@@ -144,7 +191,9 @@ git log --oneline origin/main..HEAD
 
 ### 步骤 4：确定 Issue 编号
 
-从当前分支名推断 Issue 编号。如果分支由 `/ism:start` 创建，Issue 编号通常可从分支名或 worktree 上下文中得知。
+如果 Issue 编号已在智能入口检测阶段确定（情况 A/B），直接使用。
+
+否则，从当前分支名推断 Issue 编号。如果分支由 `/ism:start` 创建，Issue 编号通常可从分支名或 worktree 上下文中得知。
 
 如果无法自动推断，列出 open Issues 让用户选择：
 
@@ -475,11 +524,11 @@ PR #N 已合并。是否清理 worktree？
 
 ## 与其他指令的关系
 
-本 skill 是 IssueSmith 流程的第四步，通常在 `/ism:implement` 全部任务完成后自动进入：
-- **`/ism:implement`** — 完成后自动引导到此 skill
+本 skill 是 IssueSmith 流程的智能入口，内部串联 start → implement → finish：
+- **`/ism:start`** — 无 worktree 时自动调用，也可独立使用
+- **`/ism:implement`** — 实现未完成时自动调用，也可独立使用（手动模式，任务间暂停确认）
 - **`/ism:verify`** — 步骤 8.1 调用的验证 skill，也可独立使用
 - **`/ism:code-review`** — 步骤 8.2 调用的 review skill，也可独立使用
-- **`/ism:start`** — 创建此 worktree 的指令
 - **`/ism:create`** — 创建此 PR 关联的 Issue
 
 ## 底线

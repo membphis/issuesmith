@@ -61,20 +61,23 @@ Fetch and follow instructions from https://raw.githubusercontent.com/membphis/is
 
 在 worktree 内按 Task Checklist 逐项实现。
 
-前置校验 worktree 环境，拆解任务，测试先行，逐项实现，每完成一项同步勾选 Issue。全部完成后自动引导进入第四步。
+前置校验 worktree 环境，拆解任务，测试先行，逐项实现。手动调用时任务间暂停确认，完成后询问是否进入第四步。
 
 ```
 /ism:implement
 ```
 
-### 第四步：收尾
+### 第四步：收尾（一键入口）
 
-验证、创建 PR、review、合并。
+智能收尾，也可一键到底。自动检测当前状态：
 
-最终验证 → AC 检查 → 推送 → 创建 PR → CI 等待 → AI review → 由你选择合并方式。
+- 无 worktree → 引导提供 Issue 编号 → 自动创建 worktree → 实现 → PR
+- 有 worktree 但未完成 → 自动补齐剩余任务 → PR
+- 已完成 → 最终验证 → AC 检查 → 推送 → 创建 PR → CI 等待 → AI review
 
 ```
 /ism:finish
+/ism:finish <N>
 ```
 
 ### 辅助指令

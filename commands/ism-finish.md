@@ -1,6 +1,11 @@
-Finish the current development branch: final verification, PR creation, CI waiting, AI review, third-party review handling, merge, and worktree cleanup.
+Smart entry command. Auto-detects project state and performs the right action:
+
+- **No worktree** → asks for Issue number → auto-creates worktree → implements → PR
+- **In worktree, implementation incomplete** → auto-implements remaining tasks → PR
+- **Implementation complete** → directly runs final verification, PR creation, CI waiting, AI review, third-party review handling, merge, and worktree cleanup
 
 Use the issuesmith-finish skill to:
+- Detect current state (worktree check) and branch accordingly
 - Run final verification (tests + lint) with fresh evidence
 - Self-check during CI wait: verification-before-completion pattern + AI code review
 - Check every Acceptance Criteria item against the Issue

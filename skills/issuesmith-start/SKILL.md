@@ -7,6 +7,11 @@ description: Start development by creating an isolated git worktree and branch f
 
 通过创建隔离的 git worktree 和分支来启动 Issue 的开发。一条指令完成所有操作：读取 Issue → 推导分支名 → 创建 worktree → 安装依赖。
 
+支持两种模式：
+
+- **手动模式**（独立调用 `/ism:start`）：展示分支名确认，等待用户同意后创建
+- **自动模式**（由 `/ism:finish` 内部调用）：跳过确认，直接创建 worktree 并自动衔接实现阶段
+
 **重要：此过程不写入任何本地文件。** 整个过程通过 git 命令和 shell 操作完成。
 
 ---
@@ -70,20 +75,22 @@ Worktree 路径：`.ism/<short-name>`（如 `.ism/add-dark-mode-toggle`）
 
 ## 步骤 4：与用户确认
 
-展示推导结果并请求确认：
+**手动模式：** 展示推导结果并请求确认：
 
 ```
 准备创建 worktree：
 
   Issue:        #<N> — <title>
   分支:         <prefix><short-name>
-   Worktree:     .ism/<short-name>
-   基准分支:     main
+  Worktree:     .ism/<short-name>
+  基准分支:     main
 
 是否继续？你可以修改分支名或路径。
 ```
 
 如果用户想修改分支名或路径，接受其输入后继续。如果用户拒绝，中止操作。
+
+**自动模式（由 `/ism:finish` 调用）：** 跳过确认，展示推导结果后直接进入步骤 5 创建 worktree。
 
 ## 步骤 5：创建 worktree
 
@@ -117,26 +124,35 @@ git worktree add -b <branch> .ism/<short-name> main
 
 ## 步骤 7：展示完成摘要
 
-显示：
+**手动模式：** 显示：
 
 ```
 Worktree 创建成功。
 
   Issue:        #<N> — <title>
   分支:         <branch>
-   Worktree:     .ism/<short-name>
-   依赖:         <已安装 | 未检测到>
+  Worktree:     .ism/<short-name>
+  依赖:         <已安装 | 未检测到>
 
 下一步：
   cd .ism/<short-name>
   # 开始实现 Issue
 ```
 
+**自动模式（由 `/ism:finish` 调用）：** 显示简要信息后不暂停，直接进入 `issuesmith-implement` 自动模式：
+
+```
+Worktree 创建成功。进入实现阶段...
+  Issue:        #<N> — <title>
+  分支:         <branch>
+  依赖:         <已安装 | 未检测到>
+```
+
 ---
 
 **行为准则**
 - **不写本地文件** — 不创建 `.opencode/scratch/` 或任何中间文件。一切通过 git 命令和 shell 完成。
-- **始终先确认再创建** — 在向用户展示推导出的分支名和路径并获得明确确认之前，绝不创建 worktree。
+- **始终先确认再创建**（手动模式）— 在向用户展示推导出的分支名和路径并获得明确确认之前，绝不创建 worktree。自动模式跳过确认。
 - **推导而非臆测** — 分支名和前缀来源于 Issue 的标题和标签，不凭空编造。
 - **优雅处理错误** — 如果 git 命令失败，解释原因并给出修复建议。
 - **不依赖 `openspec` CLI** — 此 skill 不依赖 OpenSpec 或除了 `gh` 和 `git` 之外的任何外部 CLI。
