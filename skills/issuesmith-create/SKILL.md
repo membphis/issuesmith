@@ -48,7 +48,7 @@ For each type, adapt the framing:
 - **Docs**: Describe what's missing or inaccurate. Who is affected?
 - **Refactor**: Describe the current pain points. What makes it hard to change or extend?
 
-Present the draft to the user. Accept feedback, revise, then get confirmation.
+Continue to the next section.
 
 ## Step 4: Generate Goal
 
@@ -58,7 +58,7 @@ Draft the **Goal** — a concise statement of what will change once the Issue is
 - Describes the end state, not the steps to get there.
 - Should be testable: someone reading it can tell whether it's achieved.
 
-Present to the user. Accept feedback, revise, confirm.
+Continue to the next section.
 
 ## Step 5: Generate Non-goals (if applicable)
 
@@ -67,7 +67,7 @@ If the user mentioned explicit scope boundaries, or if the topic naturally invit
 - What is explicitly NOT included?
 - What future work or separate Issues might cover?
 
-Ask the user: "Anything you want to explicitly mark as out of scope?"
+Ask the user: "Anything you want to explicitly mark as out of scope?" (Skip if user already mentioned boundaries — if nothing out of scope is apparent, skip this section entirely.)
 
 ## Step 6: Generate Acceptance Criteria
 
@@ -97,7 +97,7 @@ Goal: Add a dark mode toggle to settings.
 - [ ] Focus states and contrast ratios meet WCAG AA
 ```
 
-Present the AC to the user. Accept feedback, revise, confirm.
+Continue to the next section.
 
 ## Step 7: Generate Task Checklist
 
@@ -122,7 +122,7 @@ Derive a **Task Checklist** from the Goal and Acceptance Criteria.
 - [ ] 2.2 Add toggle to Settings page
 ```
 
-Present to the user. Accept feedback, revise, confirm.
+Continue to the next section.
 
 ## Step 8: Generate Notes / Decisions (if applicable)
 
@@ -192,10 +192,18 @@ After creation, show:
 
 ---
 
+**CRITICAL: Don't ask pointless questions**
+
+- **NEVER ask** "ready for the next section?", "shall I continue?", or similar progress confirmations between sections.
+- **DO ask** when genuinely ambiguous: conflicting approaches, missing information that blocks progress, or trade-offs the user should decide.
+- **Rule of thumb**: If the optimal choice is clear to you, make it. If it's a coin toss and matters, ask.
+
+---
+
 **Guardrails**
 - **No local files** — Do not create `.opencode/scratch/` or any intermediate files. All drafting happens in the conversation.
-- **One section at a time** — Present each section (Background, Goal, etc.) for review before moving on. Don't batch them together unless the user asks.
-- **Always show the draft before creating** — Never create an Issue without user review.
+- **Generate all sections in one continuous pass, then present the full draft** — Do NOT stop to confirm after each section (Background, Goal, etc.). Draft everything, then present the complete Issue for final review.
+- **Always show the draft before creating** — Never create an Issue without user review of the complete draft.
 - **Adapt to the issue type** — Bug reports should emphasize reproduction. Perf Issues should emphasize metrics. Adjust the framing, not the template structure.
-- **Ask, don't assume** — If the user's intent is ambiguous, ask clarifying questions rather than guessing.
+- **Ask, don't assume** — If the user's intent is ambiguous, ask clarifying questions rather than guessing. But bias toward making reasonable decisions to keep momentum.
 - **No `openspec` CLI** — This skill has zero dependency on OpenSpec or any external CLI beyond `gh`.

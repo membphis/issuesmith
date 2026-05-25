@@ -177,6 +177,13 @@ Closes #<N>
 - 编写 ThemeContext 单元测试
 - 编写 ThemeToggle 交互测试
 
+## Resolved Checklist Items
+（列出 Issue 中本 PR 实际解决的所有 checklist 项。保持 Issue 原文格式，已完成项加 [x]）
+
+- [x] 添加 ThemeContext，支持明暗主题切换
+- [x] 实现 localStorage 主题偏好持久化
+- [x] 添加 ThemeToggle 组件
+
 ## 为什么这样做
 （从 Issue 的 Notes/Decisions 提取，或根据实现过程补充）
 
@@ -201,11 +208,9 @@ Closes #<N>
 - [ ] docs/adr/ — 不需要（纯前端主题切换是标准做法）
 ```
 
-**展示完整 PR 描述，等待用户确认后再创建。**
+生成后直接创建 PR，无需等待确认。
 
 ### 步骤 7：创建 PR
-
-用户确认后：
 
 ```bash
 gh pr create \
@@ -462,7 +467,6 @@ PR #N 已合并。是否清理 worktree？
 - [ ] 无本地 scratch 文件被提交
 - [ ] Commit 历史干净，无草稿提交
 - [ ] PR 描述完整（做了什么、为什么、如何验证）
-- [ ] 用户已确认 PR 描述
 - [ ] CI 全部通过（gh pr checks）
 - [ ] AI self-review 无 Critical/Important 遗留
 - [ ] 第三方 review 意见已全部处理（修复或回复）
