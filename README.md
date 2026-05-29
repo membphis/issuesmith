@@ -13,7 +13,7 @@
 **Claude Code：**
 
 ```bash
-claude plugin add git+https://github.com/membphis/issuesmith.git
+claude plugin install git+https://github.com/membphis/issuesmith.git
 ```
 
 安装后 `/ism:explore`、`/ism:start` 等指令即可使用。
