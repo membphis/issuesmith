@@ -1,0 +1,19 @@
+{
+  "name": "issuesmith",
+  "description": "GitHub Issue-driven development workflow: explore, create, implement, and ship with discipline.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Yuansheng Wang"
+  },
+  "homepage": "https://github.com/membphis/issuesmith",
+  "repository": "https://github.com/membphis/issuesmith",
+  "license": "MIT",
+  "keywords": [
+    "github",
+    "issues",
+    "workflow",
+    "tdd",
+    "worktree",
+    "pull-request"
+  ]
+}
