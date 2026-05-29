@@ -56,7 +56,7 @@ git branch --show-current
    ```
    如果用户已通过命令行参数提供编号，跳过此询问。
 
-2. 拿到 Issue 编号后，自动执行 `issuesmith-start` 流程（**自动模式**——跳过分支名确认和摘要暂停）：
+2. 拿到 Issue 编号后，自动执行 `issuesmith-start` 流程：
    - 读取 Issue → 推导分支名 → 创建 worktree → 安装依赖
    - 完成后无缝进入情况 B
 
