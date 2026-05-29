@@ -93,16 +93,12 @@ $ git branch
 
 **校验不通过时：**
 
-```
-当前不在隔离的 worktree 中。IssueSmith 要求实现代码必须在独立的 worktree 内执行，
-以防止误改主仓库和多个任务互相干扰。
+不要终止，也不要让用户复制粘贴命令。**直接调用 `issuesmith-start` skill（自动模式）**，自动完成：
+- 读取 Issue → 推导分支名 → 确认（仅手动模式）→ 创建 worktree → 安装依赖
 
-请先执行: /ism:start <Issue 编号>
+worktree 创建成功后，无缝进入步骤 1，继续实现流程。
 
-/ism:start 会自动创建隔离的 worktree 并安装依赖，然后再执行 /ism:implement。
-```
-
-如果校验不通过，**立即终止，不要进入步骤 1**。引导用户执行 `/ism:start`。
+如果用户未提供 Issue 编号，先列出 open Issues 让用户选择，再执行 `issuesmith-start`。
 
 **手动创建 worktree 的情况：** 如果用户手动执行了 `git worktree add` 创建了 worktree 并在其中工作，校验同样会通过（当前目录不是主 worktree）。允许继续。
 
