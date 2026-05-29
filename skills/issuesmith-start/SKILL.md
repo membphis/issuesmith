@@ -94,7 +94,13 @@ Worktree 路径：`.ism/<short-name>`（如 `.ism/add-dark-mode-toggle`）
 
 ## 步骤 5：创建 worktree
 
-执行以下命令：
+**使用 `issuesmith-using-git-worktrees` skill 完成此步骤。** 它负责：
+- 检测是否已在隔离 worktree 中（避免嵌套创建）
+- 验证 `.ism/` 是否已被 `.gitignore` 排除
+- 优先使用平台原生 worktree 工具（如 `EnterWorktree`），无原生工具时才执行 git 命令
+- 处理创建失败的错误和 fallback
+
+在 `issuesmith-using-git-worktrees` 的框架下，执行以下命令：
 
 ```bash
 # 拉取远端最新代码

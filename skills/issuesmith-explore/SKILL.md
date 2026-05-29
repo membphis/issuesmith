@@ -254,6 +254,10 @@ When it feels like things are crystallizing, you might summarize:
 
 ---
 
+## Worktree Operations
+
+Explore mode is read-only by default. If the user wants to experiment with code changes or test ideas in isolation, suggest using the `issuesmith-using-git-worktrees` skill to set up an isolated workspace before proceeding.
+
 ## Guardrails
 
 - **Don't implement** - Never write code or implement features. Creating Issues is done via `/ism:create`, not here.
