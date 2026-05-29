@@ -1,0 +1,18 @@
+{
+  "name": "issuesmith-marketplace",
+  "description": "Marketplace for IssueSmith: GitHub Issue-driven development workflow",
+  "owner": {
+    "name": "Yuansheng Wang"
+  },
+  "plugins": [
+    {
+      "name": "issuesmith",
+      "description": "GitHub Issue-driven development workflow: explore, create, implement, and ship with discipline.",
+      "version": "1.0.0",
+      "source": "./",
+      "author": {
+        "name": "Yuansheng Wang"
+      }
+    }
+  ]
+}
