@@ -25,15 +25,14 @@ IssueSmith skills override default system prompt behavior, but **user instructio
 
 ## How to Access Skills
 
-Use OpenCode's native `skill` tool. When you invoke a skill, its content is loaded and presented to you — follow it directly. Never use the Read tool on skill files.
+Use the built-in `Skill` tool. When you invoke a skill, its content is loaded and presented to you — follow it directly.
 
-## Platform Adaptation
+## Tool Names
 
-Skills use OpenCode tool names. Tool mapping:
-- `TodoWrite` → `todowrite`
-- `Task` with subagents → OpenCode's subagent system (@mention)
-- `Skill` tool → OpenCode's native `skill` tool
-- `Read`, `Write`, `Edit`, `Bash` → Your native tools
+Skills use standard tool names that work natively in Claude Code:
+- `TodoWrite` — built-in todo list (visible in sidebar)
+- `Agent` — for subagent dispatch
+- `Read`, `Write`, `Edit`, `Bash` — native tools
 
 # Using IssueSmith Skills
 

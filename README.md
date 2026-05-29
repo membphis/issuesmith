@@ -10,7 +10,15 @@
 
 ### 安装
 
-**OpenCode（推荐）：**
+**Claude Code：**
+
+```bash
+claude plugin add git+https://github.com/membphis/issuesmith.git
+```
+
+安装后 `/ism:explore`、`/ism:start` 等指令即可使用。
+
+**OpenCode：**
 
 在目标项目的 `opencode.json` 中添加：
 
@@ -28,7 +36,7 @@ Fetch and follow instructions from https://raw.githubusercontent.com/membphis/is
 
 ### 前置条件
 
-- GitHub 仓库 + OpenCode（或其他 AI 编程工具）
+- GitHub 仓库 + Claude Code 或 OpenCode
 - `git worktree`（Git 自带）+ `gh` CLI
 
 ### 第一步：创建 Issue
@@ -102,8 +110,10 @@ Fetch and follow instructions from https://raw.githubusercontent.com/membphis/is
 issuesmith/
 ├── README.md               # 项目入口
 ├── AGENTS.md               # AI 项目规则
-├── commands/               # /ism:* 指令入口
-├── skills/                 # 内置 skill
+├── .claude-plugin/
+│   └── plugin.json         # Claude Code 插件清单
+├── commands/               # /ism:* 指令入口（OpenCode）
+├── skills/                 # 内置 skill（Claude Code / OpenCode 通用）
 ├── .github/
 │   ├── ISSUE_TEMPLATE/     # Issue 模板
 │   └── pull_request_template.md

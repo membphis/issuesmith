@@ -201,9 +201,9 @@ After creation, show:
 ---
 
 **Guardrails**
-- **No local files** — Do not create `.opencode/scratch/` or any intermediate files. All drafting happens in the conversation.
+- **No local files** — Do not create any intermediate files. All drafting happens in the conversation.
 - **Generate all sections in one continuous pass, then present the full draft** — Do NOT stop to confirm after each section (Background, Goal, etc.). Draft everything, then present the complete Issue for final review.
 - **Always show the draft before creating** — Never create an Issue without user review of the complete draft.
 - **Adapt to the issue type** — Bug reports should emphasize reproduction. Perf Issues should emphasize metrics. Adjust the framing, not the template structure.
 - **Ask, don't assume** — If the user's intent is ambiguous, ask clarifying questions rather than guessing. But bias toward making reasonable decisions to keep momentum.
-- **No `openspec` CLI** — This skill has zero dependency on OpenSpec or any external CLI beyond `gh`.
+- **Minimal external dependencies** — Only `gh` CLI is required, no other external tools.
