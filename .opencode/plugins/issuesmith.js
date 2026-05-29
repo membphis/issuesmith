@@ -12,7 +12,6 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '../..');
 const skillsDir = path.resolve(projectRoot, 'skills');
-const commandsDir = path.resolve(projectRoot, 'commands');
 
 const extractAndStripFrontmatter = (content) => {
   const match = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
@@ -59,20 +58,21 @@ ${content}
   return _bootstrapCache;
 };
 
-const readCommandTemplate = (filename) => {
-  const filePath = path.join(commandsDir, filename);
+const readSkillContent = (skillName) => {
+  const filePath = path.join(skillsDir, skillName, 'SKILL.md');
   if (!fs.existsSync(filePath)) return null;
-  return fs.readFileSync(filePath, 'utf8').trim();
+  const { content } = extractAndStripFrontmatter(fs.readFileSync(filePath, 'utf8'));
+  return content.trim();
 };
 
 const COMMAND_MAP = {
-  'ism-explore.md':  'ism:explore',
-  'ism-create.md':   'ism:create',
-  'ism-start.md':    'ism:start',
-  'ism-implement.md': 'ism:implement',
-  'ism-finish.md':   'ism:finish',
-  'ism-verify.md':   'ism:verify',
-  'ism-code-review.md': 'ism:code-review',
+  'issuesmith-explore':      'ism:explore',
+  'issuesmith-create':       'ism:create',
+  'issuesmith-start':        'ism:start',
+  'issuesmith-implement':    'ism:implement',
+  'issuesmith-finish':       'ism:finish',
+  'issuesmith-verify':       'ism:verify',
+  'issuesmith-code-review':  'ism:code-review',
 };
 
 const COMMAND_DESCRIPTIONS = {
@@ -95,10 +95,10 @@ export const IssuesmithPlugin = async ({ client, directory }) => {
         config.skills.paths.push(skillsDir);
       }
 
-      // Register commands from commands/ism-*.md
+      // Register commands from skills/issuesmith-*/SKILL.md
       config.command = config.command || {};
-      for (const [filename, cmdName] of Object.entries(COMMAND_MAP)) {
-        const template = readCommandTemplate(filename);
+      for (const [skillName, cmdName] of Object.entries(COMMAND_MAP)) {
+        const template = readSkillContent(skillName);
         if (template) {
           config.command[cmdName] = {
             template,
