@@ -12,9 +12,16 @@
 
 **Claude Code：**
 
+注册 marketplace：
+
 ```bash
-claude plugin marketplace add https://github.com/membphis/issuesmith
-claude plugin install issuesmith
+claude plugin marketplace add membphis/issuesmith
+```
+
+安装插件：
+
+```bash
+claude plugin install issuesmith@issuesmith-marketplace
 ```
 
 安装后 `/ism:explore`、`/ism:start` 等指令即可使用。
